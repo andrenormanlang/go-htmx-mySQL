@@ -1,4 +1,4 @@
-# CMS WITH GO 🐚
+# CMS WITH GO 💻
 
 CMS WITH GO is a headless CMS (Content Management System) written in Golang, designed to be fast, efficient, and easily extensible. It allows you to
 create a website or blog, with any template you like, in only a few
