@@ -1,6 +1,6 @@
-# CMS FOR GO 🐚
+# CMS WITH GO 💻
 
-CMS FOR GO is a headless CMS (Content Management System) written in Golang, designed to be fast, efficient, and easily extensible. It allows you to
+CMS WITH GO is a headless CMS (Content Management System) written in Golang, designed to be fast, efficient, and easily extensible. It allows you to
 create a website or blog, with any template you like, in only a few
 commands.
 
@@ -30,7 +30,7 @@ go build
 ./urchin
 ```
 
-This will start Urchin on `http://localhost:8080`. You can customize
+This will start CMS WITH GO on `http://localhost:8080`. You can customize
 the configuration by providing the necessary environment variables.
 
 For more information, see the [configuration settings](#configuration).
