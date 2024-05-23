@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"net/mail"
 
-	"github.com/gin-gonic/gin"
 	"github.com/andrenormanlang/database"
-	"github.com/rs/zerolog/log"
+	"github.com/andrenormanlang/views"
+	"github.com/gin-gonic/gin"
 )
 
 func makeContactFormHandler() func(*gin.Context) {
@@ -18,31 +18,23 @@ func makeContactFormHandler() func(*gin.Context) {
 
 		// Parse email
 		_, err := mail.ParseAddress(email)
-		if err != nil { 	
-			c.HTML(http.StatusOK, "contact-failure.html", gin.H{
-				"email": email,
-				"error": "invalid email",
-			})
-			return
+		if err != nil { 
+			render(c, http.StatusBadRequest, views.MakeContactFailure(email, err.Error()))
+			return	
 		}
 
 		// Make sure name and message is reasonable
 		if len(name) > 200 {
-			c.HTML(http.StatusOK, "contact-failure.html", gin.H{
-				"email": email,
-				"error": "invalid name",
-			})
+			render(c, http.StatusBadRequest, views.MakeContactFailure(email, err.Error()))
 			return
 		} 
 
 		if len(message) > 10000 {
-			c.HTML(http.StatusOK, "contact-failure.html", gin.H{
-				"email": email,
-				"error": "message too big",
-			})
+			render(c, http.StatusBadRequest, views.MakeContactFailure(email, err.Error()))
 			return
 		}
 
+		render(c, http.StatusOK, views.MakeContactSuccess(email, name))
 		c.HTML(http.StatusOK, "contact-success.html", gin.H{
 			"name": name,
 			"email": email,
@@ -53,12 +45,6 @@ func makeContactFormHandler() func(*gin.Context) {
 // TODO : This is a duplicate of the index handler... abstract
 func makeContactPageHandler(settings AppSettings, db database.Database) func(*gin.Context) {
 	return func(c *gin.Context){
-		posts, err := db.GetPosts()
-		if err != nil {
-			log.Error().Msgf("error loading posts: %v\n", err)
-			return
-		}
-
-		c.HTML(http.StatusAccepted, "contact", gin.H{"posts": posts})
+		render(c, http.StatusOK, views.MakeContactPage())
 	}
 }

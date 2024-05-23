@@ -1,17 +1,19 @@
+# Go parameters
 GOCMD=go
-TEMPL=templ 
+TEMPL=templ
 BUILD_DIR=./tmp
-CMSGO_DIR=./cmd/cmsgo
+GOCMS_DIR=./cmd/cmsgo
 
+# Name of the binary
 BINARY_NAME=cmsgo
 
 all: build test
 
 build:
-	$(GOCMD) build -v -o $(BUILD_DIR)/$(BINARY_NAME) $(CMSGO_DIR)
+	$(TEMPL) generate
+	$(GOCMD) build -v -o $(BUILD_DIR)/$(BINARY_NAME) $(GOCMS_DIR)
 
 test:
-	$(TEMPL) generate
 	$(GOCMD) test -v ./...
 
 clean:
@@ -19,10 +21,9 @@ clean:
 	rm -f $(BUILD_DIR)/$(BINARY_NAME)
 
 run:
-	$(GOCMD) run $(CMSGO_DIR)/main.go
-    
+	$(GOCMD) run -o $(BINARY_NAME) -v ./...
+	./$(BUILD_DIR)/$(BINARY_NAME)
 
 .PHONY: all build test clean run
-
 
 

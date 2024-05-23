@@ -2,9 +2,8 @@ package app
 
 import (
 	"net/http"
-	"github.com/a-h/templ"
 	"github.com/andrenormanlang/database"
-	views "github.com/andrenormanlang/views/index"
+	 "github.com/andrenormanlang/views"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -37,10 +36,7 @@ func Run(app_settings AppSettings, database database.Database) error {
 	return nil
 }
 
-func Render(c *gin.Context, status int, template templ.Component) error {
-	c.Status(status)
-	return template.Render(c.Request.Context(), c.Writer)
-}
+
 
 /// This function will act as the handler for
 /// the home page
@@ -52,7 +48,7 @@ func makeHomeHandler(settings AppSettings, db database.Database) func(*gin.Conte
 			return
 		}
 
-		Render(c, http.StatusOK, views.MakeIndex(posts))
+		render(c, http.StatusOK, views.MakeIndex(posts))
 		
 	}
 }
