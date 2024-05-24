@@ -1,14 +1,19 @@
 package views
 
-templ MakeNavBar() {
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li> <!-- TODO : pass these links -->
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
+type Link struct {
+    Href string
+    Name string
+}
+
+templ MakeNavBar(links []Link) {
+    <header>
+        <nav>
+            <ul>
+                for _, link := range links {
+                    <li><a href={templ.URL(link.Href)}>{ link.Name }</a></li> // Pass the links in here
+                }
+            </ul>
+        </nav>
+    </header>
+    <br />
 }

@@ -4,9 +4,10 @@ import (
 	"net/http"
 	"net/mail"
 
+	"github.com/gin-gonic/gin"
+	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
 	"github.com/andrenormanlang/views"
-	"github.com/gin-gonic/gin"
 )
 
 func makeContactFormHandler() func(*gin.Context) {
@@ -18,32 +19,28 @@ func makeContactFormHandler() func(*gin.Context) {
 
 		// Parse email
 		_, err := mail.ParseAddress(email)
-		if err != nil { 
-			render(c, http.StatusBadRequest, views.MakeContactFailure(email, err.Error()))
-			return	
+		if err != nil {
+			render(c, http.StatusOK, views.MakeContactFailure(email, err.Error()))
+			return
 		}
 
 		// Make sure name and message is reasonable
 		if len(name) > 200 {
-			render(c, http.StatusBadRequest, views.MakeContactFailure(email, err.Error()))
+			render(c, http.StatusOK, views.MakeContactFailure(email, "name too long (200 chars max)"))
 			return
 		} 
 
 		if len(message) > 10000 {
-			render(c, http.StatusBadRequest, views.MakeContactFailure(email, err.Error()))
+			render(c, http.StatusOK, views.MakeContactFailure(email, "message too long (1000 chars max)"))
 			return
 		}
 
 		render(c, http.StatusOK, views.MakeContactSuccess(email, name))
-		c.HTML(http.StatusOK, "contact-success.html", gin.H{
-			"name": name,
-			"email": email,
-		})
 	}
 }
 
 // TODO : This is a duplicate of the index handler... abstract
-func makeContactPageHandler(settings AppSettings, db database.Database) func(*gin.Context) {
+func makeContactPageHandler(settings common.AppSettings, db database.Database) func(*gin.Context) {
 	return func(c *gin.Context){
 		render(c, http.StatusOK, views.MakeContactPage())
 	}

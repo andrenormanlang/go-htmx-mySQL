@@ -1,11 +1,12 @@
 package app
 
 import (
-	"html/template"
+
 	"net/http"
 	"strconv"
 
 	"github.com/andrenormanlang/database"
+	"github.com/andrenormanlang/views"
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
@@ -68,9 +69,7 @@ func makePostHandler(database database.Database) func(*gin.Context) {
 		
 		// Serve the templated page
 		log.Warn().Msgf("Post: %v\n", post)
-		c.HTML(http.StatusOK, "post",gin.H{
-			"Title": post.Title,
-			"Content": template.HTML(post.Content),
-		})
+		render(c, http.StatusOK, views.MakePostPage(post.Title, post.Content))
+		
 	}
 }

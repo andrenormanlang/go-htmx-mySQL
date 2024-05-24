@@ -1,42 +1,44 @@
 package views
 
 import (
+    "fmt"
     . "github.com/andrenormanlang/common"
-
 )
 
-templ MakeIndex(posts []Post){
+templ MakeIndex(posts []Post) {
     <!DOCTYPE html>
     <html lang="en">
 
-    <!-- This should go into Make HTML Headers --> 
+    // This should go into Make HTML Headers
     <head>
         <meta charset="UTF-8" />
         <title>Menu and Contact Form</title>
-        <!-- Minified version -->
         <link rel="stylesheet" href="/static/simple.min.css" />
         <script src="/static/htmx.min.js"></script>
         <script src="/static/client-side-templates.js"></script>
     </head>
 
     <body>
+        @MakeNavBar([]Link{
+            Link{Name: "Home", Href: "/"},
+            Link{Name: "About", Href: "/about"},
+            Link{Name: "Services", Href: "/services"},
+            Link{Name: "Contact", Href: "/contact"},
 
-    @MakeNavBar()    
+            Link{Name: "LinkedIn", Href: "https://www.linkedin.com/in/andrenormanlang/"},
+        })
         <main>
             for _, post := range posts {
                 <article>
                     <h2>{ post.Title }</h2>
                     <p>
                         { post.Excerpt }
-                        <a href="/post/{ post.Id }">read more...</a>
+                        <a href={ templ.URL("/post/" + fmt.Sprintf("%d", post.Id)) }> read more...</a>
                     </p>
                 </article>
             }
-           
-        </main>    
+        </main>
     @MakeFooter()
-        </body>
-
+    </body>
     </html>
 }
-
