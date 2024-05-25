@@ -1,7 +1,6 @@
 # Go parameters
 GOCMD=go
 TEMPL=templ
-TAILWIND=tailwindcss
 BUILD_DIR=./tmp
 CMSGO_DIR=./cmd/cmsgo
 CMSGO_ADMIN_DIR=./cmd/cmsgo-admin
@@ -14,7 +13,6 @@ all: build test
 
 build:
 	$(TEMPL) generate
-	$(TAILWIND) -i ./static/style.css -o ./static/output.css
 	GIN_MODE=release $(GOCMD) build -ldflags "-s" -v -o $(BUILD_DIR)/$(BINARY_NAME) $(CMSGO_DIR)
 	GIN_MODE=release $(GOCMD) build -ldflags "-s" -v -o $(BUILD_DIR)/$(ADMIN_BINARY_NAME) $(CMSGO_ADMIN_DIR)
 

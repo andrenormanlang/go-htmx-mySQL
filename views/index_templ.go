@@ -28,17 +28,15 @@ func MakeIndex(posts []Post) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>Menu and Contact Form</title><link rel=\"stylesheet\" href=\"/static/simple.min.css\"><script src=\"/static/htmx.min.js\"></script><script src=\"/static/client-side-templates.js\"></script></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>Home Page</title><link rel=\"stylesheet\" href=\"/static/simple.min.css\"><script src=\"/static/htmx.min.js\"></script><script src=\"/static/client-side-templates.js\"></script></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = MakeNavBar([]Link{
-			Link{Name: "Home", Href: "/"},
-			Link{Name: "About", Href: "/about"},
-			Link{Name: "Services", Href: "/services"},
-			Link{Name: "Contact", Href: "/contact"},
-
-			Link{Name: "LinkedIn", Href: "https://www.linkedin.com/in/andrenormanlang/"},
+			{Name: "Home", Href: "/"},
+			{Name: "About", Href: "/about"},
+			{Name: "Services", Href: "/services"},
+			{Name: "Contact", Href: "/contact"},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -55,7 +53,7 @@ func MakeIndex(posts []Post) templ.Component {
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(post.Title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/index.templ`, Line: 33, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/index.templ`, Line: 31, Col: 36}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -68,7 +66,7 @@ func MakeIndex(posts []Post) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(post.Excerpt)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/index.templ`, Line: 35, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/index.templ`, Line: 33, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {

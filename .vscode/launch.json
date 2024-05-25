@@ -5,14 +5,32 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "GinFramwork",
+            "name": "CMSGOApp",
             "type": "go",
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/cmsgo",
             "cwd": "${workspaceFolder}",
             "envFile": "${workspaceFolder}/envfile",
+            "args": [],
+            "showLog": true,
+            "trace": "log"
 
-        }
+        },
+        {
+            "name": "AdminApp",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/cmsgo-admin",
+            "cwd": "${workspaceFolder}",
+            "envFile": "${workspaceFolder}/envfile",
+            "args": [],
+            "showLog": true,
+            "trace": "log"
+
+        },
+        
+
     ]
 }

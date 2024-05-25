@@ -23,33 +23,33 @@ func MakeContactSuccess(email string, name string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h2>Message sent from ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h2>Message Sent From ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/contact-success.templ`, Line: 4, Col: 32}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/contact-success.templ`, Line: 4, Col: 33}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h2><p>Thank you for contacting us, ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("!</h2><p>Thank you ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/contact-success.templ`, Line: 5, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/contact-success.templ`, Line: 5, Col: 23}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("! This message was successfully sent.</p>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(". The message was successfully sent.</p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -1,3 +1,30 @@
-CMSGO_DATABASE_ADDRESS=localhost CMSGO_DATABASE_PORT=3306 CMSGO_DATABASE_USER=root CMSGO_DATABASE_PASSWORD=shiva7 CMSGO_DATABASE_NAME=cms-and-go ./tmp/cmsgo
+CMSGO_DATABASE_ADDRESS=localhost CMSGO_DATABASE_PORT=3306 CMSGO_DATABASE_USER=root CMSGO_DATABASE_PASSWORD=shiva7 CMSGO_DATABASE_NAME=cms-and-go CMS_GO_IMAGE_DIRECTORY=./media ./tmp/cmsgo
+CMSGO_DATABASE_ADDRESS=localhost CMSGO_DATABASE_PORT=3306 CMSGO_DATABASE_USER=root CMSGO_DATABASE_PASSWORD=shiva7 CMSGO_DATABASE_NAME=cms-and-go CMS_GO_IMAGE_DIRECTORY=./media ./tmp/cmsgo-admin
+GOOSE_DRIVER="mysql" GOOSE_DBSTRING="root:shiva7@/cms-and-go" goose up
 
-CMSGO_DATABASE_ADDRESS=localhost CMSGO_DATABASE_PORT=3306 CMSGO_DATABASE_USER=root CMSGO_DATABASE_PASSWORD=shiva7 CMSGO_DATABASE_NAME=cms-and-go ./tmp/cmsgo-admin
+go install github.com/cosmtrek/air@latest
+
+mysql -h localhost -u root -pshiva7 cms-and-go
+
+export CMSGO_DATABASE_USER=root
+export CMSGO_DATABASE_PASSWORD=shiva7
+export CMSGO_DATABASE_ADDRESS=localhost
+export CMSGO_DATABASE_PORT=3306
+export CMSGO_DATABASE_NAME=cms-and-go
+export CMSGO_IMAGE_DIRECTORY=./media
+export CMSGO_WEBSERVER_PORT=8081
+./tmp/cmsgo-admin
+
+export CMSGO_DATABASE_USER=root
+export CMSGO_DATABASE_PASSWORD=shiva7
+export CMSGO_DATABASE_ADDRESS=localhost
+export CMSGO_DATABASE_PORT=3306
+export CMSGO_DATABASE_NAME=cms-and-go
+export CMSGO_IMAGE_DIRECTORY=./media
+export CMSGO_WEBSERVER_PORT=8081
+./tmp/cmsgo
+
+file uploading example
+curl --location 'http://127.0.0.1:8081/images' \
+  --form 'file=@/c/MAMP/htdocs/Developer/cms-and-go/static/Galactus-SS.jpg' \
+  --form 'alt=This is an example of the alt text'

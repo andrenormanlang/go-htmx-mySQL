@@ -32,8 +32,6 @@ func MakeContactPage() templ.Component {
 			{Name: "About", Href: "/about"},
 			{Name: "Services", Href: "/services"},
 			{Name: "Contact", Href: "/contact"},
-
-			// {Name: "LinkedIn", Href: "https://www.linkedin.com/in/andrenormanlang/"},
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

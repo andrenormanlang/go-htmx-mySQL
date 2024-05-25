@@ -1,0 +1,18 @@
+# Address to the MariaDB database
+database_address = "mariadb"
+
+# User to access datbaase
+database_user = "root"
+
+# Password for the database user
+database_password = "shiva7"
+
+# port
+database_port = 3306
+
+# name of database where CMSGO's
+# migrations was installed
+database_name = "cms-and-go"
+
+# port to run the webserver on
+webserver_port = 8080
