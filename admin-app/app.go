@@ -187,5 +187,7 @@ func Run(app_settings common.AppSettings, database database.Database) error {
 	r.DELETE("/posts", deletePostHandler(&database))
 	r.Run(":8081")
 
+
+
 	return nil
 }
