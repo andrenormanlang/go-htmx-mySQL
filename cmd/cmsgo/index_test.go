@@ -14,6 +14,11 @@ import (
 
 type DatabaseMock struct{}
 
+// GetCard implements database.Database.
+func (db DatabaseMock) GetCard(uuid int) (common.Card, error) {
+	panic("unimplemented")
+}
+
 func (db DatabaseMock) GetPosts() ([]common.Post, error) {
 	return []common.Post{
 		{
@@ -42,6 +47,10 @@ func (db DatabaseMock) DeletePost(id int) error {
 }
 
 func (db DatabaseMock) AddImage(string, string, string) error {
+	return fmt.Errorf("not implemented")
+}
+
+func (db DatabaseMock) AddCard(string, string, string, string) error {
 	return fmt.Errorf("not implemented")
 }
 

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  golang_app:
+    image: andrenormanlang/cmsgo-golang:0.2
+    ports:
+      - "8080:8080"
+      
+
+    mariadb:
+      image: mariadb:11.3.2
+      ports:
+        - "3306:3306"
+      environment:
+        MARIADB_USER: root
+        MARIADB_PASSWORD: shiva7
+        MARIADB_DATABASE: cms-and-go
+        MARIADB_ROOT_PASSWORD: shiva7

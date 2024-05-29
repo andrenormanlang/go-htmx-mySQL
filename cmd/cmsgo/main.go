@@ -33,6 +33,7 @@ func main() {
 			log.Error().Msgf("could not load settings: %v", err)
 			os.Exit(-1)
 		}
+
 		app_settings = settings
 	}
 
@@ -50,9 +51,9 @@ func main() {
 
 	var defaultPort = 8080 // Set your default port here
 
-if app_settings.WebserverPort == 0 {
-    app_settings.WebserverPort = defaultPort
-}
+	if app_settings.WebserverPort == 0 {
+		app_settings.WebserverPort = defaultPort
+	}
 
 	r := app.SetupRoutes(app_settings, db_connection)
 	err = r.Run(fmt.Sprintf(":%d", app_settings.WebserverPort))

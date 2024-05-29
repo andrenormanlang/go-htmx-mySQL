@@ -1,5 +1,6 @@
 # Address to the MariaDB database
-database_address = "mariadb"
+# for local runs, change to "localhost"
+database_address = "localhost"
 
 # User to access datbaase
 database_user = "root"
@@ -10,9 +11,16 @@ database_password = "shiva7"
 # port
 database_port = 3306
 
-# name of database where CMSGO's
-# migrations was installed
 database_name = "cms-and-go"
 
 # port to run the webserver on
 webserver_port = 8080
+
+# Directory to use for string uploaded images.
+image_dir = "./images"
+
+[[card_schema]]
+schema_name = "schema1"
+
+[[card_schema]]
+schema_name = "schema2"

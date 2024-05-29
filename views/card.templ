@@ -1,0 +1,36 @@
+package views
+
+
+templ MakeCardPage(json_data string) {
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Menu and Contact Form</title>
+        <!-- Minified version -->
+        <link rel="stylesheet" href="/static/simple.min.css" />
+        <script src="/static/htmx.min.js"></script>
+        <script src="/static/client-side-templates.js"></script>
+    </head>
+
+    <body>
+        @MakeNavBar([]Link{
+            {Name: "Home", Href: "/"},
+            {Name: "About", Href: "/about"},
+            {Name: "Services", Href: "/services"},
+            {Name: "Contact", Href: "/contact"},
+        })
+        <main>
+            <article>
+                <h2>{ person.Name }</h2>
+                <p>age: {person.age}</p>
+                <p>height: {person.height}</p>
+            </article>
+            
+        </main>
+        @MakeFooter()
+    </body>
+
+    </html>
+}

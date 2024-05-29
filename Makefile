@@ -6,7 +6,7 @@ CMSGO_DIR=./cmd/cmsgo
 CMSGO_ADMIN_DIR=./cmd/cmsgo-admin
 
 # Name of the binary
-BINARY_NAME=cmsgo
+BINARY_NAME=cmsgo.exe
 ADMIN_BINARY_NAME=cmsgo-admin
 
 all: build test
