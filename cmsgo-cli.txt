@@ -6,6 +6,10 @@ go install github.com/cosmtrek/air@latest
 
 mysql -h localhost -u root -pshiva7 cms-and-go
 
+works in powershell only to close open localhost:
+netstat -ano | findstr :8080
+taskkill /PID <PID> - the last column /F
+
 export CMSGO_DATABASE_USER=root
 export CMSGO_DATABASE_PASSWORD=shiva7
 export CMSGO_DATABASE_ADDRESS=localhost
