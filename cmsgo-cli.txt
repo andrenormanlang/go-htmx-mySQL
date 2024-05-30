@@ -32,3 +32,6 @@ file uploading example
 curl --location 'http://127.0.0.1:8081/images' \
   --form 'file=@/c/MAMP/htdocs/Developer/cms-and-go/static/Galactus-SS.jpg' \
   --form 'alt=This is an example of the alt text'
+
+For test coverage
+ go test -coverprofile=coverage.out -covermode=atomic ./... -v
