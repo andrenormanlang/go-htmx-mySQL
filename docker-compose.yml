@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  golang_app:
+    image: andrenormanlang/cms-golang:0.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: .
+        target: /gocms
+        volume:
+          nocopy: true
+    command: ./gocms/compose-run.sh
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: always
+    networks:
+      - common-net
+
+  mariadb:
+    image: mariadb:11.2.3-jammy
+    container_name: mariadb
+    environment:
+      MARIADB_PASSWORD: shiva7
+      MARIADB_DATABASE: cms-and-go
+      MARIADB_ROOT_PASSWORD: shiva7
+    healthcheck:
+      test: [ "CMD", "mariadb", "-u", "root", "-pshiva7", "-e", "USE cms-and-go" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    networks:
+      - common-net
+
+networks:
+  common-net: {}

@@ -3,7 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  cmd = "go build -v -o .\\temp\\cmsgo.exe .\\cmd\\cmsgo"
+  cmd = "go build -v -o .\\tmp\\cmsgo.exe .\\cmd\\cmsgo"
   args_bin = []
   bin = ".\\tmp\\cmsgo.exe"
   full_bin = ".\\tmp\\cmsgo.exe --config cmsgo_config.toml.exe"
