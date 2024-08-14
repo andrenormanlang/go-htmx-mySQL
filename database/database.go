@@ -15,7 +15,7 @@ type Database interface {
 	AddPost(title string, excerpt string, content string) (int, error)
 	ChangePost(id int, title string, excerpt string, content string) error
 	DeletePost(id int) (int, error)
-	AddPage(title string, content string) (int, error)
+	AddPage(title string, content string, link string) (int, error)
 }
 
 type SqlDatabase struct {
@@ -141,8 +141,8 @@ func (db SqlDatabase) DeletePost(id int) (int, error) {
 	return int(rows_affected), nil
 }
 
-func (db SqlDatabase) AddPage(title string, content string) (int, error) {
-	res, err := db.Connection.Exec("INSERT INTO pages(content, title) VALUES(?, ?, ?)", content, title)
+func (db SqlDatabase) AddPage(title string, content string, link string) (int, error) {
+	res, err := db.Connection.Exec("INSERT INTO pages(content, title, link) VALUES(?, ?, ?)", content, title, link)
 	if err != nil {
 		return -1, err
 	}

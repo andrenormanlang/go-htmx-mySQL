@@ -34,6 +34,14 @@ func main() {
 	}
 	app_settings = settings
 
+	if app_settings.AdminPort == 0 {
+		app_settings.AdminPort = 8081 // default port if not set
+	}
+
+		// Add a log to confirm the port being used
+		log.Info().Msgf("Admin port set to %d", app_settings.AdminPort)
+	
+
 	database, err := database.MakeSqlConnection(
 		app_settings.DatabaseUser,
 		app_settings.DatabasePassword,
