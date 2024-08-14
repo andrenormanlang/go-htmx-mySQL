@@ -9,14 +9,13 @@ import (
 	"github.com/andrenormanlang/common"
 	"github.com/rs/zerolog/log"
 )
-
 type Database interface {
 	GetPosts(int, int) ([]common.Post, error)
 	GetPost(post_id int) (common.Post, error)
 	AddPost(title string, excerpt string, content string) (int, error)
 	ChangePost(id int, title string, excerpt string, content string) error
-	DeletePost(id int) error
-	AddImage(uuid string, name string, alt string) error
+	DeletePost(id int) (int, error)
+	AddPage(title string, content string) (int, error)
 }
 
 type SqlDatabase struct {
@@ -48,10 +47,11 @@ func (db SqlDatabase) GetPosts(limit int, offset int) (all_posts []common.Post, 
 
 	return all_posts, nil
 }
+
 // / This function gets a post from the database
 // / with the given ID.
 func (db SqlDatabase) GetPost(post_id int) (post common.Post, err error) {
-	rows, err := db.Connection.Query("SELECT title, content FROM posts WHERE id=?;", post_id)
+	rows, err := db.Connection.Query("SELECT id, title, content, excerpt FROM posts WHERE id=?;", post_id)
 	if err != nil {
 		return common.Post{}, err
 	}
@@ -60,7 +60,7 @@ func (db SqlDatabase) GetPost(post_id int) (post common.Post, err error) {
 	}()
 
 	rows.Next()
-	if err = rows.Scan(&post.Title, &post.Content); err != nil {
+	if err = rows.Scan(&post.Id, &post.Title, &post.Content, &post.Excerpt); err != nil {
 		return common.Post{}, err
 	}
 
@@ -95,7 +95,9 @@ func (db SqlDatabase) ChangePost(id int, title string, excerpt string, content s
 		return err
 	}
 	defer func() {
-		err = errors.Join(tx.Rollback())
+		if commit_err := tx.Commit(); commit_err != nil {
+			err = errors.Join(err, tx.Rollback(), commit_err)
+		}
 	}()
 
 	if len(title) > 0 {
@@ -119,62 +121,47 @@ func (db SqlDatabase) ChangePost(id int, title string, excerpt string, content s
 		}
 	}
 
-	if err = tx.Commit(); err != nil {
-		return err
-	}
-
 	return nil
 }
 
 // / This function changes a post based on the values
 // / provided. Note that empty strings will mean that
 // / the value will not be updated.
-func (db SqlDatabase) DeletePost(id int) error {
-	if _, err := db.Connection.Exec("DELETE FROM posts WHERE id=?;", id); err != nil {
-		return err
+func (db SqlDatabase) DeletePost(id int) (int, error) {
+	var res, err = db.Connection.Exec("DELETE FROM posts where id=?", id)
+	if err != nil {
+		return 0, err
 	}
 
-	return nil
+	rows_affected, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(rows_affected), nil
 }
 
-// AddImage will add the image metadata to the
-// database.
-// name - file name saved to the disk
-// alt - the alternative text
-// returns (uuid, nil) if succeeded, ("", err) otherwise
-func (db SqlDatabase) AddImage(uuid string, name string, alt string) (err error) {
-	tx, err := db.Connection.Begin()
+func (db SqlDatabase) AddPage(title string, content string) (int, error) {
+	res, err := db.Connection.Exec("INSERT INTO pages(content, title) VALUES(?, ?, ?)", content, title)
 	if err != nil {
-		return err
-	}
-	defer func() {
-		err = errors.Join(tx.Rollback())
-	}()
-
-	log.Info().Msgf("adding stuff to the DB")
-	if name == "" {
-		return fmt.Errorf("cannot have empty name")
+		return -1, err
 	}
 
-	if alt == "" {
-		return fmt.Errorf("cannot have empty alt text")
-	}
-
-	query := "INSERT INTO images(uuid, name, alt) VALUES(?, ?, ?);"
-	_, err = tx.Exec(query, uuid, name, alt)
+	id, err := res.LastInsertId()
 	if err != nil {
-		return err
+		log.Warn().Msgf("could not get last ID: %v", err)
+		return -1, nil
 	}
 
-	if err = tx.Commit(); err != nil {
-		return err
-	}
+	// TODO : possibly unsafe int conv,
+	// make sure all IDs are i64 in the
+	// future
+	return int(id), nil
 
-	return nil
 }
 
 func MakeSqlConnection(user string, password string, address string, port int, database string) (SqlDatabase, error) {
-	/// Checking the DB connection
+
 	/// TODO : let user specify the DB
 	connection_str := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", user, password, address, port, database)
 	db, err := sql.Open("mysql", connection_str)
@@ -182,7 +169,7 @@ func MakeSqlConnection(user string, password string, address string, port int, d
 		return SqlDatabase{}, err
 	}
 
-	if err = db.Ping(); err != nil {
+	if err := db.Ping(); err != nil {
 		return SqlDatabase{}, err
 	}
 	// See "Important settings" section.
@@ -196,5 +183,4 @@ func MakeSqlConnection(user string, password string, address string, port int, d
 		User:       user,
 		Connection: db,
 	}, nil
-
 }

@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
 	"github.com/andrenormanlang/views"
-	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
 
@@ -26,13 +26,19 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 	addCachableHandler(r, "GET", "/", homeHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/contact", contactHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/post/:id", postHandler, &cache, app_settings, database)
+	addCachableHandler(r, "GET", "/images/:name", imageHandler, &cache, app_settings, database)
+	addCachableHandler(r, "GET", "/images", imagesHandler, &cache, app_settings, database)
+
+	// Static endpoint for image serving
+	r.Static("/images/data", app_settings.ImageDirectory)
 
 	// Add the pagination route as a cacheable endpoint
 	addCachableHandler(r, "GET", "/page/:num", homeHandler, &cache, app_settings, database)
 
 	// DO not cache as it needs to handlenew form values
-	r.POST("/contact-send", makeContactFormHandler())
+	r.POST("/contact-send", makeContactFormHandler(app_settings))
 
+	// Where all the static files (css, js, etc) are served from
 	r.Static("/static", "./static")
 	return r
 }
@@ -41,10 +47,12 @@ func addCachableHandler(e *gin.Engine, method string, endpoint string, generator
 
 	handler := func(c *gin.Context) {
 		// if the endpoint is cached
-		cached_endpoint, err := (*cache).Get(c.Request.RequestURI)
-		if err == nil {
-			c.Data(http.StatusOK, "text/html; charset=utf-8", cached_endpoint.Contents)
-			return
+		if app_settings.CacheEnabled {
+			cached_endpoint, err := (*cache).Get(c.Request.RequestURI)
+			if err == nil {
+				c.Data(http.StatusOK, "text/html; charset=utf-8", cached_endpoint.Contents)
+				return
+			}
 		}
 
 		// Before handler call (retrieve from cache)
@@ -52,17 +60,16 @@ func addCachableHandler(e *gin.Engine, method string, endpoint string, generator
 		if err != nil {
 			log.Error().Msgf("could not generate html: %v", err)
 			// TODO : Need a proper error page
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": "could not render HTML",
-				"msg":   err.Error(),
-			})
+			c.JSON(http.StatusInternalServerError, common.ErrorRes("could not render HTML", err))
 			return
 		}
 
 		// After handler  (add to cache)
-		err = (*cache).Store(c.Request.RequestURI, html_buffer)
-		if err != nil {
-			log.Warn().Msgf("could not add page to cache: %v", err)
+		if app_settings.CacheEnabled {
+			err = (*cache).Store(c.Request.RequestURI, html_buffer)
+			if err != nil {
+				log.Warn().Msgf("could not add page to cache: %v", err)
+			}
 		}
 		c.Data(http.StatusOK, "text/html; charset=utf-8", html_buffer)
 	}
@@ -103,7 +110,7 @@ func homeHandler(c *gin.Context, settings common.AppSettings, db database.Databa
 	}
 
 	// if not cached, create the cache
-	index_view := views.MakeIndex(posts)
+	index_view := views.MakeIndex(posts, settings.AppNavbar.Links)
 	html_buffer := bytes.NewBuffer(nil)
 
 	err = index_view.Render(c, html_buffer)

@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
+	_ "github.com/go-sql-driver/mysql"
 	admin_app "github.com/andrenormanlang/admin-app"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
 )
 
@@ -17,11 +17,22 @@ func main() {
 	// in this APP
 	common.SetupLogger()
 
-
+	config_toml := flag.String("config", "", "path to config toml file")
 	flag.Parse()
 
 	var app_settings common.AppSettings
-	
+	if *config_toml == "" {
+		log.Error().Msgf("config not specified (--config)")
+		os.Exit(-1)
+	}
+
+	log.Info().Msgf("reading config file %s", *config_toml)
+	settings, err := common.ReadConfigToml(*config_toml)
+	if err != nil {
+		log.Error().Msgf("could not read toml: %v", err)
+		os.Exit(-2)
+	}
+	app_settings = settings
 
 	database, err := database.MakeSqlConnection(
 		app_settings.DatabaseUser,
@@ -36,14 +47,7 @@ func main() {
 	}
 
 	r := admin_app.SetupRoutes(app_settings, database)
-
-	var defaultPort = 8081 // Set your default port here
-
-if app_settings.WebserverPort == 0 {
-    app_settings.WebserverPort = defaultPort
-}
-
-	err = r.Run(fmt.Sprintf(":%d", app_settings.WebserverPort))
+	err = r.Run(fmt.Sprintf(":%d", app_settings.AdminPort))
 	if err != nil {
 		log.Error().Msgf("could not run app: %v", err)
 		os.Exit(-1)

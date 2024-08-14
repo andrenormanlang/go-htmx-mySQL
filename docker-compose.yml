@@ -1,17 +1,33 @@
-version: '3.8'
-
 services:
-  golang_app:
+  urchin_app:
     image: andrenormanlang/cms-golang:0.1
     ports:
       - "8080:8080"
     volumes:
       - type: bind
-        source: .
+        source: ..
         target: /gocms
         volume:
           nocopy: true
-    command: ./gocms/compose-run.sh
+    command: /gocms/start-app.sh
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: always
+    networks:
+      - common-net
+
+  urchin_admin_app:
+    image: andrenormanlang/cms-golang:0.1
+    ports:
+      - "8081:8081"
+    volumes:
+      - type: bind
+        source: ..
+        target: /urchin
+        volume:
+          nocopy: true
+    command: /gocms/start-admin-app.sh
     depends_on:
       mariadb:
         condition: service_healthy
@@ -22,15 +38,13 @@ services:
   mariadb:
     image: mariadb:11.2.3-jammy
     container_name: mariadb
-    environment:
-      MARIADB_PASSWORD: shiva7
-      MARIADB_DATABASE: cms-and-go
-      MARIADB_ROOT_PASSWORD: shiva7
+    env_file:
+      - ../CMS-AND-GO/.dev.env
     healthcheck:
-      test: [ "CMD", "mariadb", "-u", "root", "-pshiva7", "-e", "USE cms-and-go" ]
-      interval: 10s
+      test: [ "CMD", "mariadb", "-u", "root", "-proot", "-e", "USE cms-and-go" ]
+      interval: 30s
       timeout: 10s
-      retries: 10
+      retries: 5
     networks:
       - common-net
 

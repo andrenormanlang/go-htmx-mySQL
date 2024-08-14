@@ -1,0 +1,26 @@
+package views
+
+import "github.com/andrenormanlang/common"
+
+templ MakePage(title string, content string, links []common.Link) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<title>{ title }</title>
+			<!-- Minified version -->
+			<link rel="stylesheet" href="/static/simple.min.css"/>
+			<script src="/static/htmx.min.js"></script>
+			<script src="/static/client-side-templates.js"></script>
+		</head>
+		<body>
+			@MakeNavBar(links)
+			<main>
+				<article>
+					@templ.Raw(content)
+				</article>
+			</main>
+			@MakeFooter()
+		</body>
+	</html>
+}

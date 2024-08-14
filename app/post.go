@@ -2,21 +2,17 @@ package app
 
 import (
 	"bytes"
-	"strconv"
+	"net/http"
 
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
-	"github.com/andrenormanlang/views"
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
+	"github.com/andrenormanlang/common"
+	"github.com/andrenormanlang/database"
+	"github.com/andrenormanlang/views"
 	"github.com/rs/zerolog/log"
 )
-
-type PostBinding struct {
-	Id string `uri:"id" binding:"required"`
-}
 
 func mdToHTML(md []byte) []byte {
 	// create markdown parser with extensions
@@ -33,27 +29,28 @@ func mdToHTML(md []byte) []byte {
 }
 
 func postHandler(c *gin.Context, app_settings common.AppSettings, database database.Database) ([]byte, error) {
-	// localhost:8080/post/{id}
 
-	var post_binding PostBinding
-	if err := c.ShouldBindUri(&post_binding); err != nil {
+	var post_binding common.PostIdBinding
+
+	err := c.ShouldBindUri(&post_binding)
+
+	if err != nil || post_binding.Id < 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid post ID"})
+
 		return nil, err
 	}
 
 	// Get the post with the ID
-	post_id, err := strconv.Atoi(post_binding.Id)
-	if err != nil {
-		return nil, err
-	}
+	post, err := database.GetPost(post_binding.Id)
 
-	post, err := database.GetPost(post_id)
-	if err != nil {
+	if err != nil || post.Content == "" {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Post Not Found"})
 		return nil, err
 	}
 
 	// Generate HTML page
 	post.Content = string(mdToHTML([]byte(post.Content)))
-	post_view := views.MakePostPage(post.Title, post.Content)
+	post_view := views.MakePostPage(post.Title, post.Content, app_settings.AppNavbar.Links)
 	html_buffer := bytes.NewBuffer(nil)
 	if err = post_view.Render(c, html_buffer); err != nil {
 		log.Error().Msgf("could not render: %v", err)

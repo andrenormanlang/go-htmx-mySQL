@@ -1,19 +1,16 @@
 package views
 
-type Link struct {
-    Href string
-    Name string
-}
+import "github.com/andrenormanlang/common"
 
-templ MakeNavBar(links []Link) {
-    <header>
-        <nav>
-            <ul>
-                for _, link := range links {
-                    <li><a href={templ.URL(link.Href)}>{ link.Name }</a></li> // Pass the links in here
-                }
-            </ul>
-        </nav>
-    </header>
-    <br />
+templ MakeNavBar(links []common.Link) {
+	<header>
+		<nav>
+			<ul>
+				for _, link := range links {
+					<li><a href={ templ.URL(link.Href) }>{ link.Name }</a></li> // Pass the links in here
+				}
+			</ul>
+		</nav>
+	</header>
+	<br/>
 }

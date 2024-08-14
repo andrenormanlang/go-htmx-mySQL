@@ -1,4 +1,7 @@
 {
+     // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -9,7 +12,10 @@
             "program": "${workspaceFolder}/cmd/cmsgo",
             "cwd": "${workspaceFolder}",
             "envFile": "${workspaceFolder}/envfile",
-            "args": [],
+            "args": [
+                "--config",
+                "${workspaceFolder}/cmsgo_config.toml"
+            ],
             "showLog": true,
             "trace": "log"
         },
@@ -21,7 +27,10 @@
             "program": "${workspaceFolder}/cmd/cmsgo-admin",
             "cwd": "${workspaceFolder}",
             "envFile": "${workspaceFolder}/envfile",
-            "args": [],
+            "args": [
+                "--config",
+                "${workspaceFolder}/cmsgo_config.toml"
+            ],
             "showLog": true,
             "trace": "log"
         },

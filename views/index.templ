@@ -5,7 +5,7 @@ import (
     . "github.com/andrenormanlang/common"
 )
 
-templ MakeIndex(posts []Post) {
+templ MakeIndex(posts []Post, links []Link) {
     <!DOCTYPE html>
     <html lang="en">
 
@@ -19,12 +19,7 @@ templ MakeIndex(posts []Post) {
     </head>
 
     <body>
-        @MakeNavBar([]Link{
-            {Name: "Home", Href: "/"},
-            {Name: "About", Href: "/about"},
-            {Name: "Services", Href: "/services"},
-            {Name: "Contact", Href: "/contact"},
-        })
+        @MakeNavBar(links)
         <main>
             for _, post := range posts {
                 <article>

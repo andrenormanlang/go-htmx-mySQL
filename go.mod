@@ -4,7 +4,7 @@ go 1.22.3
 
 require (
 	github.com/BurntSushi/toml v1.4.0
-	github.com/a-h/templ v0.2.697
+	github.com/a-h/templ v0.2.747
 	github.com/dolthub/go-mysql-server v0.18.1
 	github.com/fossoreslp/go-uuid-v4 v1.0.0
 	github.com/gin-gonic/gin v1.10.0
@@ -65,7 +65,7 @@ require (
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/tools v0.19.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231106174013-bbf56f31fb17 // indirect
