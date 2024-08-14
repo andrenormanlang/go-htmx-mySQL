@@ -5,7 +5,7 @@ database_address = "mariadb"
 database_user = "root"
 
 # Password for the database user
-database_password = "root"
+database_password = "shiva7"
 
 # port
 database_port = 3306
