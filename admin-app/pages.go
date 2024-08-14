@@ -46,6 +46,7 @@ func postPageHandler(database database.Database) func(*gin.Context) {
 		id, err := database.AddPage(
 			add_page_request.Title,
 			add_page_request.Content,
+			add_page_request.Link,
 		)
 		if err != nil {
 			log.Error().Msgf("failed to add post: %v", err)
@@ -137,7 +138,7 @@ func checkRequiredPageData(add_page_request AddPageRequest) error {
 }
 
 func validateLinkRegex(link string) error {
-	match , err:= regexp.MatchString("^[a-z0-9_\\-]+$", link)
+	match , err:= regexp.MatchString("^[a-zA-Z0-9_\\-]+$", link)
 	if err != nil {
 		return fmt.Errorf("could not match the string: %v", err)
 	}
