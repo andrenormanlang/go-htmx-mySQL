@@ -3,7 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  cmd = "make build"
+  cmd = "go build -v -o ./tmp/cmsgo.exe ./cmd/cmsgo"
   args_bin = []
   bin = "./tmp/cmsgo"
   full_bin = "./tmp/urchin --config ./docker/cmsgo_config.toml"
