@@ -2,7 +2,7 @@
 
 FROM ubuntu:jammy-20240125
 
-ENV TZ=Europe/London
+ENV TZ=Europe/Stockholm
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV PATH="${PATH}:/usr/local/go/bin"
 
