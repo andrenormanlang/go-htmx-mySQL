@@ -7,11 +7,11 @@ services:
       - "8080:8080"
     volumes:
       - type: bind
-        source: .
-        target: /gocms
+        source: ..
+        target: /cmsgo
         volume:
           nocopy: true
-    command: ./cms-and-go/docker/start-app.sh
+    command:  /cmsgo/docker/start-app.sh
     depends_on:
       mariadb:
         condition: service_healthy
@@ -25,11 +25,11 @@ services:
       - "8081:8081"
     volumes:
       - type: bind
-        source: .
+        source: ..
         target: /gocms
         volume:
           nocopy: true
-    command: ./cms-and-go/docker/start-admin-app.sh
+    command:  /cmsgo/start-admin-app.sh
     depends_on:
       mariadb:
         condition: service_healthy
