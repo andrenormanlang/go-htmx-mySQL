@@ -9,6 +9,7 @@ import (
 func SetupRoutes(app_settings common.AppSettings, database database.Database) *gin.Engine {
 
 	r := gin.Default()
+	r.Run(":8081")
 	r.MaxMultipartMemory = 1
 
 	r.GET("/posts/:id", getPostHandler(database))
