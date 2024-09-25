@@ -9,7 +9,7 @@ templ MakePostPage(title string, content string, links []common.Link) {
 
     <head>
         <meta charset="UTF-8" />
-        <title>{title}</title>
+        <title>Menu and Contact Form</title>
         <!-- Minified version -->
         <link rel="stylesheet" href="/static/simple.min.css" />
         <script src="/static/htmx.min.js"></script>
@@ -20,8 +20,8 @@ templ MakePostPage(title string, content string, links []common.Link) {
         @MakeNavBar(links)
         <main>
             <article>
-                <h1>{ title }</h1>
-                @templ.Raw(content)
+                <h2>{ title }</h2>
+                <p>@templ.Raw(content)</p>
             </article>
         </main>
     

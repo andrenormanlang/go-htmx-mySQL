@@ -157,7 +157,6 @@ func (db SqlDatabase) AddPage(title string, content string, link string) (int, e
 	// make sure all IDs are i64 in the
 	// future
 	return int(id), nil
-
 }
 
 func MakeSqlConnection(user string, password string, address string, port int, database string) (SqlDatabase, error) {

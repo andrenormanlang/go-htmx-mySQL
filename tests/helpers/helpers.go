@@ -19,7 +19,7 @@ import (
 
 //go:generate ../../../migrations ./migrations
 
-
+//go:embed migrations/*.sql
 var EmbedMigrations embed.FS
 
 func RunDatabaseServer(app_settings common.AppSettings) {

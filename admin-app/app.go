@@ -9,7 +9,7 @@ import (
 func SetupRoutes(app_settings common.AppSettings, database database.Database) *gin.Engine {
 
 	r := gin.Default()
-	r.Run(":8081")
+	// r.Run(":8081")
 	r.MaxMultipartMemory = 1
 
 	r.GET("/posts/:id", getPostHandler(database))
@@ -17,7 +17,7 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 	r.PUT("/posts", putPostHandler(database))
 	r.DELETE("/posts/:id", deletePostHandler(database))
 
-	r.POST("/images", postImageHandler(app_settings, database))
+	r.POST("/images", postImageHandler(app_settings))
 	r.DELETE("/images/:name", deleteImageHandler(app_settings))
 
 	r.POST("/pages", postPageHandler(database))
