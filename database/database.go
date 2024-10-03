@@ -9,6 +9,7 @@ import (
 	"github.com/andrenormanlang/common"
 	"github.com/rs/zerolog/log"
 )
+
 type Database interface {
 	GetPosts(int, int) ([]common.Post, error)
 	GetPost(post_id int) (common.Post, error)
@@ -16,6 +17,7 @@ type Database interface {
 	ChangePost(id int, title string, excerpt string, content string) error
 	DeletePost(id int) (int, error)
 	AddPage(title string, content string, link string) (int, error)
+	GetPage(link string) (common.Page, error)
 }
 
 type SqlDatabase struct {
@@ -157,6 +159,24 @@ func (db SqlDatabase) AddPage(title string, content string, link string) (int, e
 	// make sure all IDs are i64 in the
 	// future
 	return int(id), nil
+}
+
+func (db SqlDatabase) GetPage(link string) (common.Page, error) {
+	rows, err := db.Connection.Query("SELECT id, title, content, link FROM pages WHERE link=?;", link)
+	if err != nil {
+		return common.Page{}, err
+	}
+	defer func() {
+		err = errors.Join(rows.Close())
+	}()
+
+	page := common.Page{}
+	rows.Next()
+	if err = rows.Scan(&page.Id, &page.Title, &page.Content, &page.Link); err != nil {
+		return common.Page{}, err
+	}
+
+	return page, nil
 }
 
 func MakeSqlConnection(user string, password string, address string, port int, database string) (SqlDatabase, error) {
