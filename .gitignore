@@ -1,2 +1,11 @@
-.vsco.vscode
+.vscode
 **/__debug*
+**/*_templ.go
+tmp/
+
+tests/system_tests/helpers/migrations
+tests/system_tests/admin_app/endpoint_tests/*.png
+images/
+
+
+tests/helpers/migrations
