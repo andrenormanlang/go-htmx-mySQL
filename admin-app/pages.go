@@ -26,10 +26,10 @@ func postPageHandler(database database.Database) func(*gin.Context) {
 			return
 		}
 
-		err := checkRequiredPageData(add_page_request)
 		decoder := json.NewDecoder(c.Request.Body)
-		err = decoder.Decode(&add_page_request)
+		err := decoder.Decode(&add_page_request)
 		
+		// err = checkRequiredPageData(add_page_request)
 		if err != nil {
 			log.Warn().Msgf("invalid page request: %v", err)
 			c.JSON(http.StatusBadRequest, common.ErrorRes("invalid request body", err))

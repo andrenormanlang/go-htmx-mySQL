@@ -19,7 +19,7 @@ func TestIndexSuccess(t *testing.T) {
 		DatabasePort:     3006,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
-		DatabaseName:     "urchin",
+		DatabaseName:     "cms-and-go",
 		WebserverPort:    8080,
 	}
 

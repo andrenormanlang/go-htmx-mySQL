@@ -16,10 +16,10 @@ import (
 func TestPostSuccess(t *testing.T) {
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3006,
+		DatabasePort:     3306,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
-		DatabaseName:     "urchin",
+		DatabaseName:     "cms-and-go",
 		WebserverPort:    8080,
 		CacheEnabled:     false,
 	}
@@ -48,10 +48,10 @@ func TestPostFailureStringKey(t *testing.T) {
 
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3006,
+		DatabasePort:     3306,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
-		DatabaseName:     "urchin",
+		DatabaseName:     "cms-and-go",
 		WebserverPort:    8080,
 	}
 
@@ -74,10 +74,10 @@ func TestPostFailurePostDoesntExist(t *testing.T) {
 
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3006,
+		DatabasePort:     3306,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
-		DatabaseName:     "urchin",
+		DatabaseName:     "cms-and-go",
 		WebserverPort:    8080,
 	}
 
@@ -103,10 +103,10 @@ func TestPostFailureNegativeInvalidKey(t *testing.T) {
 
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3006,
+		DatabasePort:     3306,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
-		DatabaseName:     "urchin",
+		DatabaseName:     "cms-and-go",
 		WebserverPort:    8080,
 		CacheEnabled:     false,
 	}
