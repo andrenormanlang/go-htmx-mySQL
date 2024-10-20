@@ -5,12 +5,31 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
 	admin_app "github.com/andrenormanlang/admin-app"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
+	"github.com/andrenormanlang/plugins"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
+	lua "github.com/yuin/gopher-lua"
 )
+
+func loadShortcodeHandlers(shortcodes []common.Shortcode) (map[string]*lua.LState, error) {
+	shortcode_handlers := make(map[string]*lua.LState, 0)
+	for _, shortcode := range shortcodes {
+		// Read the LUA state
+		state := lua.NewState()
+		err := state.DoFile(shortcode.Plugin)
+		// TODO : check that the function HandleShortcode(args)
+		//        exists and returns the correct type
+		if err != nil {
+			return map[string]*lua.LState{}, fmt.Errorf("could not load shortcode %s: %v", shortcode.Name, err)
+		}
+		shortcode_handlers[shortcode.Name] = state
+	}
+
+	return shortcode_handlers, nil
+}
 
 func main() {
 	// sets zerolog as the main logger
@@ -34,14 +53,6 @@ func main() {
 	}
 	app_settings = settings
 
-	if app_settings.AdminPort == 0 {
-		app_settings.AdminPort = 8081 // default port if not set
-	}
-
-		// Add a log to confirm the port being used
-		log.Info().Msgf("Admin port set to %d", app_settings.AdminPort)
-	
-
 	database, err := database.MakeSqlConnection(
 		app_settings.DatabaseUser,
 		app_settings.DatabasePassword,
@@ -54,8 +65,28 @@ func main() {
 		os.Exit(-1)
 	}
 
-	r := admin_app.SetupRoutes(app_settings, database)
-	err = r.Run(fmt.Sprintf(":%d", app_settings.AdminPort))
+	shortcode_handlers, err := loadShortcodeHandlers(app_settings.Shortcodes)
+	if err != nil {
+		log.Error().Msgf("%v", err)
+		os.Exit(-1)
+	}
+
+	// TODO: we probably want to refact loadShortcodeHandler
+	// TODO: into loadPluginHandlers instead
+	post_hook := plugins.PostHook{}
+	image_plugin := plugins.Plugin{
+		ScriptName: "img",
+		Id: "img-plugin",
+	}
+	post_hook.Register(image_plugin)
+
+	// img, _ := shortcode_handlers["img"]
+	hooks_map := map[string]plugins.Hook{
+		"add_post": post_hook,
+	}
+
+	r := admin_app.SetupRoutes(app_settings, database, shortcode_handlers, hooks_map)
+	err = r.Run(fmt.Sprintf(":%d", app_settings.WebserverPort))
 	if err != nil {
 		log.Error().Msgf("could not run app: %v", err)
 		os.Exit(-1)
