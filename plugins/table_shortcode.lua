@@ -1,3 +1,6 @@
+-- User has to know what "arguments" will look like
+-- from a callback perspective. I.e. how many strings it has,
+-- the type of each string in a position, etc.
 function HandleShortcode(arguments)
     if #arguments ~= 2 then
         return ""

@@ -1,12 +1,9 @@
 package plugins 
 
 import lua "github.com/yuin/gopher-lua"
-// Observer interface
-
-
-// Subject interface
-type Hook interface {
-    Register(plugin Plugin)
-	Deregister(plugin Plugin)
-	NotifyAll(lua_states map[string]*lua.LState) []string
+type Hook struct {
+	Plugins map[string][]*lua.LState
 }
+
+// post_save -> plugin_main(post_content, post_title, post_excerpt, post_date)
+// render_header -> plugin(html string) // passing everything under/inclusively <header> ... </header>

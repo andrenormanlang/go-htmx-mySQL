@@ -9,8 +9,8 @@ type DatabaseMock struct {
 	GetPostsHandler   func(int, int) ([]common.Post, error)
 	AddPostHandler    func(string, string, string) (int, error)
 	DeletePostHandler func(int) (int, error)
-	AddPageHandler 		func(string, string, string) (int, error)
-	GetPageHandler 		func(string) (common.Page, error)
+	AddPageHandler    func(string, string, string) (int, error)
+	GetPageHandler    func(string) (common.Page, error)
 }
 
 func (db DatabaseMock) GetPosts(limit int, offset int) ([]common.Post, error) {
@@ -34,9 +34,9 @@ func (db DatabaseMock) DeletePost(id int) (int, error) {
 }
 
 func (db DatabaseMock) AddPage(title string, content string, link string) (int, error) {
-		return db.AddPageHandler(title, content, link)
+	return db.AddPageHandler(title, content, link)
 }
 
 func (db DatabaseMock) GetPage(link string) (common.Page, error) {
-		return db.GetPageHandler(link)
+	return db.GetPageHandler(link)
 }

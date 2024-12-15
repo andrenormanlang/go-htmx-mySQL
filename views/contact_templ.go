@@ -28,20 +28,20 @@ func MakeContactFormWithRecaptcha(recaptcha_sitekey string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"demo-form\" method=\"post\" hx-post=\"/contact-send\" hx-target=\"#contact-form\" hx-trigger=\"verified\"><label for=\"name\">Name:</label> <input type=\"text\" id=\"name\" name=\"name\" required><br><br><label for=\"email\">Email:</label> <input type=\"email\" id=\"email\" name=\"email\" required><br><br><label for=\"message\">Message:</label><br><textarea id=\"message\" name=\"message\" rows=\"4\" cols=\"50\" required></textarea><br><br><button class=\"g-recaptcha\" data-sitekey=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"demo-form\" class=\"space-y-4 p-12\" method=\"post\" hx-post=\"/contact-send\" hx-target=\"#contact-form\" hx-trigger=\"verified\"><label for=\"name\" class=\"block text-md font-medium\">Name:</label> <input id=\"name\" class=\"mt-1 block w-full px-3 py-2 border border-pastel-blue dark:border-pastel-blue-900 rounded-md shadow-md focus:outline-none focus:ring-pastel-blue-500 focus:border-pastel-blue-500\" type=\"text\" name=\"name\" required> <label for=\"email\" class=\"block text-md font-medium\">Email:</label> <input id=\"email\" class=\"mt-1 block w-full px-3 py-2 border border-pastel-blue dark:border-pastel-blue-900 rounded-md shadow-md focus:outline-none focus:ring-pastel-blue-500 focus:border-pastel-blue-500\" type=\"email\" name=\"email\" required> <label for=\"message\" class=\"block text-md font-medium\">Message:</label> <textarea id=\"message\" class=\"mt-1 block w-full px-3 py-2 border border-pastel-blue dark:border-pastel-blue-900 rounded-md shadow-md focus:outline-none focus:ring-pastel-blue-500 focus:border-pastel-blue-500\" name=\"message\" rows=\"4\" cols=\"50\" required></textarea><div class=\"text-center\"><button class=\"g-recaptcha text-gray-700 dark:text-gray-900 w-fit inline-flex justify-center py-2 px-4 border border-transparent shadow-md text-sm font-medium rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-200 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 fous:ring-pastel-blue-300\" data-sitekey=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(recaptcha_sitekey)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/contact.templ`, Line: 17, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/contact.templ`, Line: 16, Col: 358}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" data-callback=\"onSubmit\" data-action=\"submit\">Submit</button><script>\r\n                function onSubmit(){\r\n                    const event = new Event('verified');\r\n                    const elem = document.querySelector(\"#demo-form\");\r\n                    elem.dispatchEvent(event);\r\n                }\r\n            </script></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" data-callback=\"onSubmit\" data-action=\"submit\">Submit</button></div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -67,9 +67,56 @@ func MakeContactForm() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"demo-form\" method=\"post\" hx-post=\"/contact-send\" hx-target=\"#contact-form\"><label for=\"name\">Name:</label> <input type=\"text\" id=\"name\" name=\"name\" required><br><br><label for=\"email\">Email:</label> <input type=\"email\" id=\"email\" name=\"email\" required><br><br><label for=\"message\">Message:</label><br><textarea id=\"message\" name=\"message\" rows=\"4\" cols=\"50\" required></textarea><br><br><input type=\"submit\" value=\"Submit\"></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"demo-form\" class=\"space-y-4 p-12\" method=\"post\" hx-post=\"/contact-send\" hx-target=\"#contact-form\"><label for=\"name\" class=\"block text-md font-medium\">Name:</label> <input id=\"name\" class=\"mt-1 block w-full px-3 py-2 border border-pastel-blue dark:border-pastel-blue-900 rounded-md shadow-md focus:outline-none focus:ring-pastel-blue-500 focus:border-pastel-blue-500\" type=\"text\" name=\"name\" required> <label for=\"email\" class=\"block text-md font-medium\">Email:</label> <input id=\"email\" class=\"mt-1 block w-full px-3 py-2 border border-pastel-blue dark:border-pastel-blue-900 rounded-md shadow-md focus:outline-none focus:ring-pastel-blue-500 focus:border-pastel-blue-500\" type=\"email\" name=\"email\" required> <label for=\"message\" class=\"block text-md font-medium\">Message:</label> <textarea id=\"message\" class=\"mt-1 block w-full px-3 py-2 border border-pastel-blue dark:border-pastel-blue-900 rounded-md shadow-md focus:outline-none focus:ring-pastel-blue-500 focus:border-pastel-blue-500\" name=\"message\" rows=\"4\" cols=\"50\" required></textarea><div class=\"text-center\"><button type=\"submit\" class=\"text-gray-700 dark:text-gray-900 w-fit inline-flex justify-center py-2 px-4 border border-transparent shadow-md text-sm font-medium rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-200 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 fous:ring-pastel-blue-300\">Send Message</button></div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
+		}
+		return templ_7745c5c3_Err
+	})
+}
+
+func makeContact(recaptcha_sitekey string) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"contact-form\" class=\"rounded-lg shadow-md w-full\"><h2 class=\"text-4xl font-bold mb-6 text-center\">Contact Us</h2>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if len(recaptcha_sitekey) > 0 {
+			templ_7745c5c3_Err = MakeContactFormWithRecaptcha(recaptcha_sitekey).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = MakeContactForm().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if len(recaptcha_sitekey) > 0 {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script src=\"https://www.google.com/recaptcha/api.js\"></script>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		return templ_7745c5c3_Err
 	})
@@ -88,53 +135,12 @@ func MakeContactPage(links []common.Link, recaptcha_sitekey string) templ.Compon
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var4 == nil {
-			templ_7745c5c3_Var4 = templ.NopComponent
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>Menu and Contact Form</title><!-- Minified version --><link rel=\"stylesheet\" href=\"/static/simple.min.css\"><script src=\"/static/htmx.min.js\"></script><script src=\"/static/client-side-templates.js\"></script>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if len(recaptcha_sitekey) > 0 {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script src=\"https://www.google.com/recaptcha/api.js\"></script>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</head><body>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = MakeNavBar(links).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main><div id=\"contact-form\"><h2>Contact Us</h2>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if len(recaptcha_sitekey) > 0 {
-			templ_7745c5c3_Err = MakeContactFormWithRecaptcha(recaptcha_sitekey).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		} else {
-			templ_7745c5c3_Err = MakeContactForm().Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></main>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = MakeFooter().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
+		templ_7745c5c3_Err = MakeLayout("Menu and Contact Form", links, makeContact(recaptcha_sitekey)).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
