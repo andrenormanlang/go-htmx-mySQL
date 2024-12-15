@@ -12,7 +12,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestAddPageHappyPath(t *testing.T) {
 	databaseMock := mocks.DatabaseMock{
 		AddPageHandler: func(string, string, string) (int, error) {
@@ -23,7 +22,7 @@ func TestAddPageHappyPath(t *testing.T) {
 	page_data := admin_app.AddPageRequest{
 		Title:   "Title",
 		Content: "Content",
-		Link:	"Link",
+		Link:    "Link",
 	}
 
 	router := admin_app.SetupRoutes(app_settings, databaseMock)

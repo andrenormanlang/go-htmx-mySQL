@@ -31,3 +31,13 @@ links = [
     { name = "Images", href = "/images", title = "Images page" },
     { name = "Contact", href = "/contact", title = "Contacts page" },
 ]
+
+[[shortcodes]]
+name = "img"
+# must have function "HandleShortcode(arguments []string) -> string"
+plugin = "plugins/image_shortcode.lua"
+
+[[shortcodes]]
+name = "table"
+# must have function "HandleShortcode(arguments []string) -> string"
+plugin = "plugins/table_shortcode.lua"

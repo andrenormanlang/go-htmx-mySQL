@@ -16,7 +16,7 @@ import (
 func TestPostSuccess(t *testing.T) {
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3306,
+		DatabasePort:     3006,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
 		DatabaseName:     "cms-and-go",
@@ -48,7 +48,7 @@ func TestPostFailureStringKey(t *testing.T) {
 
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3306,
+		DatabasePort:     3006,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
 		DatabaseName:     "cms-and-go",
@@ -74,7 +74,7 @@ func TestPostFailurePostDoesntExist(t *testing.T) {
 
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3306,
+		DatabasePort:     3006,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
 		DatabaseName:     "cms-and-go",
@@ -103,7 +103,7 @@ func TestPostFailureNegativeInvalidKey(t *testing.T) {
 
 	app_settings := common.AppSettings{
 		DatabaseAddress:  "localhost",
-		DatabasePort:     3306,
+		DatabasePort:     3006,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
 		DatabaseName:     "cms-and-go",

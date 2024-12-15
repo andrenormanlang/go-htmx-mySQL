@@ -39,13 +39,17 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 	// Add the pagination route as a cacheable endpoint
 	addCachableHandler(r, "GET", "/page/:num", homeHandler, &cache, app_settings, database)
 
+	addCachableHandler(r, "GET", "/about", aboutHandler, &cache, app_settings, database)
+	addCachableHandler(r, "GET", "/services", servicesHandler, &cache, app_settings, database)
+
 	// DO not cache as it needs to handlenew form values
 	r.POST("/contact-send", makeContactFormHandler(app_settings))
 
 	// Where all the static files (css, js, etc) are served from
 	r.Static("/static", "./static")
 	
-	
+	r.NoRoute(notFoundHandler(app_settings))
+
 	return r
 
 }
@@ -128,4 +132,16 @@ func homeHandler(c *gin.Context, settings common.AppSettings, db database.Databa
 	}
 
 	return html_buffer.Bytes(), nil
+}
+
+func notFoundHandler(app_settings common.AppSettings) func(*gin.Context) {
+	handler := func(c *gin.Context) {
+		buffer, err := renderHtml(c, views.MakeNotFoundPage(app_settings.AppNavbar.Links))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, common.ErrorRes("could not render HTML", err))
+			return
+		}
+		c.Data(http.StatusOK, "text/html; charset=utf-8", buffer)
+	}
+	return handler
 }
