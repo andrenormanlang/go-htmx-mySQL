@@ -3,8 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  
-  cmd = "go build -v -o ./tmp/cmsgo.exe ./cmd/cmsgo"
+  cmd = "fuser -k 8080/tcp && go build -v -o ./tmp/cmsgo.exe ./cmd/cmsgo"
   args_bin = []
   bin = "./tmp/cmsgo"
   full_bin = "./tmp/cmsgo.exe --config cmsgo_config.toml"
@@ -16,13 +15,16 @@ tmp_dir = "tmp"
   follow_symlink = false
   include_dir = []
   include_ext = ["go", "tpl", "tmpl", "templ", "html", "js"]
-  include_file = []
+  include_file = ["cmsg_config.toml"]
   kill_delay = "0s"
   log = "build-errors.log"
   poll = false
   poll_interval = 0
+
+  # Run templ generate before rebuilding the app
+  pre_cmd = ["templ generate"]
+
   post_cmd = []
-  pre_cmd = []
   rerun = false
   rerun_delay = 500
   send_interrupt = false

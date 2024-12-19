@@ -25,6 +25,7 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 	cache := MakeCache(4, time.Minute*10, &TimeValidator{})
 	addCachableHandler(r, "GET", "/", homeHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/contact", contactHandler, &cache, app_settings, database)
+	addCachableHandler(r, "GET", "/product", productHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/post/:id", postHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/images/:name", imageHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/images", imagesHandler, &cache, app_settings, database)
@@ -32,6 +33,7 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 	// Pages will querying the page content from the unique 
 	//  link given at the creation of the page step
 	addCachableHandler(r, "GET", "/pages/:link", pageHandler, &cache, app_settings, database)
+
 
 	// Static endpoint for image serving
 	r.Static("/images/data", app_settings.ImageDirectory)

@@ -10,6 +10,7 @@ type PostIdResponse struct {
 	Id int `json:"id"`
 }
 
+
 type GetPostResponse struct {
 	Id      int    `json:"id"`
 	Title   string `json:"title"`
@@ -26,4 +27,8 @@ type GetImageResponse struct {
 	Name      string `json:"name"`
 	AltText   string `json:"alt_text"`
 	Extension string `json:"extension"`
+}
+
+type CardIdResponse struct {
+	Id string `json:"id"`
 }

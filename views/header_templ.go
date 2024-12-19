@@ -54,7 +54,7 @@ func MakeNavBar(links []common.Link) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header><nav class=\"fixed bg-gray-800 p-4 top-0 w-full inline\"><div class=\"container mx-auto flex justify-between items-center\"><div class=\"flex content-center\"><a href=\"/\" class=\"text-white text-4xl font-bold align-center\">Urchin</a></div><div class=\"flex justify-end items-center\"><div class=\"hidden md:flex space-x-4 items-center\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header><nav class=\"fixed bg-gray-800 p-4 top-0 w-full inline\"><div class=\"container mx-auto flex justify-between items-center\"><div class=\"flex content-center\"><a href=\"/\" class=\"text-white text-4xl font-bold align-center\">CMS & GO</a></div><div class=\"flex justify-end items-center\"><div class=\"hidden md:flex space-x-4 items-center\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

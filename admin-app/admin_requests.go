@@ -9,7 +9,7 @@ import "github.com/andrenormanlang/common"
 type AddPageRequest struct {
 	Title   string `json:"title"`
 	Content string `json:"content"`
-	Link string `json:"link"`
+	Link    string `json:"link"`
 }
 
 type DeletePostBinding struct {
@@ -36,3 +36,13 @@ type AddImageRequest struct {
 type DeleteImageBinding struct {
 	Name string `uri:"name" binding:"required"`
 }
+
+// TODO: Does this still need to be here?
+// TODO: Are we handling images apart from file adds?
+type AddCardRequest struct {
+	Title   string `json:"title"`
+	Image   string `json:"image"`
+	Schema  string `json:"schema"`
+	Content string `json:"content"`
+}
+
