@@ -1,15 +1,21 @@
 package admin_app
 
 type PageResponse struct {
-	Id 	int    `json:"id"`
-	
-	Link string   `json:"link"`
+	Id   int    `json:"id"`
+	Link string `json:"link"`
 }
 
 type PostIdResponse struct {
 	Id int `json:"id"`
 }
 
+type CardIdResponse struct {
+	Id string `json:"id"`
+}
+
+type CardSchemaResponse struct {
+	Id string `json:"uuid"`
+}
 
 type GetPostResponse struct {
 	Id      int    `json:"id"`
@@ -27,8 +33,4 @@ type GetImageResponse struct {
 	Name      string `json:"name"`
 	AltText   string `json:"alt_text"`
 	Extension string `json:"extension"`
-}
-
-type CardIdResponse struct {
-	Id string `json:"id"`
 }

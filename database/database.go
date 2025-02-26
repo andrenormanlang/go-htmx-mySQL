@@ -20,6 +20,7 @@ type Database interface {
 	AddPage(title string, content string, link string) (int, error)
 	GetPage(link string) (common.Page, error)
 	AddCard(title string, image string, schema string, content string) (string, error)
+	AddCardSchema(json_id string, json_schema string, json_title string) (string, error)
 }
 
 type SqlDatabase struct {
@@ -185,23 +186,34 @@ func (db SqlDatabase) GetPage(link string) (common.Page, error) {
 // / Returns the uuid as a string if successful, otherwise error
 // / won't be null
 func (db SqlDatabase) AddCard(title string, image string, schema string, content string) (string, error) {
-    // TODO: Generate a UUID
+
 	uuid := uuid.New().String()
 
-    _, err := db.Connection.Exec("INSERT INTO cards(uuid,image_location, json_data, json_schema) VALUES(?,?, ?, ?)", uuid, image, content, schema) 
-    if err != nil {
-        return "", err
-    }
-    
+	_, err := db.Connection.Exec("INSERT INTO cards(uuid, image_location, json_data, json_schema) VALUES(?, ?, ?, ?)", uuid, image, content, schema)
+	if err != nil {
+		return "", err
+	}
 
-
-	// TODO : possibly unsafe int conv,
-	// make sure all IDs are i64 in the
-	// future
-	return "", nil
+	return uuid, nil
 }
 
+func (db SqlDatabase) AddCardSchema(json_id string, json_schema string, json_title string) (string, error) {
+	uuid := uuid.New().String()
 
+	_, err := db.Connection.Exec(
+		"INSERT INTO card_schemas(uuid, json_id, json_schema, json_title, card_ids) VALUES(?, ?, ?, ?)",
+		uuid,
+		json_id,
+		json_schema,
+		json_title,
+		"[]")
+
+	if err != nil {
+		return "", err
+	}
+
+	return uuid, nil
+}
 
 func MakeSqlConnection(user string, password string, address string, port int, database string) (SqlDatabase, error) {
 

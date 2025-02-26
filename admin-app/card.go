@@ -1,4 +1,3 @@
-
 package admin_app
 
 import (
@@ -54,5 +53,3 @@ func postCardHandler(database database.Database) func(*gin.Context) {
 		})
 	}
 }
-
-

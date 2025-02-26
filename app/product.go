@@ -7,6 +7,10 @@ import (
 	"github.com/andrenormanlang/views"
 )
 
+// func productHandler(c *gin.Context, app_settings common.AppSettings, db database.Database) ([]byte, error) {
+// 	return renderHtml(c, views.MakeProductPage(app_settings.AppNavbar.Links))
+// }
+
 func productHandler(c *gin.Context, app_settings common.AppSettings, db database.Database) ([]byte, error) {
 	return renderHtml(c, views.MakeProductPage(app_settings.AppNavbar.Links))
 }

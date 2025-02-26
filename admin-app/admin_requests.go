@@ -33,12 +33,12 @@ type AddImageRequest struct {
 	Alt string `json:"alt"`
 }
 
+// TODO : Does this still need to be here?
+// TODO : Are we handling images apart from file adds?
 type DeleteImageBinding struct {
 	Name string `uri:"name" binding:"required"`
 }
 
-// TODO: Does this still need to be here?
-// TODO: Are we handling images apart from file adds?
 type AddCardRequest struct {
 	Title   string `json:"title"`
 	Image   string `json:"image"`
@@ -46,3 +46,8 @@ type AddCardRequest struct {
 	Content string `json:"content"`
 }
 
+type AddCardSchemaRequest struct {
+	JsonId     string `json:"$id"`
+	JsonSchema string `json:"$schema"`
+	JsonTitle  string `json:"title"`
+}

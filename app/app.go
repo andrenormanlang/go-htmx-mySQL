@@ -25,15 +25,16 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 	cache := MakeCache(4, time.Minute*10, &TimeValidator{})
 	addCachableHandler(r, "GET", "/", homeHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/contact", contactHandler, &cache, app_settings, database)
-	addCachableHandler(r, "GET", "/product", productHandler, &cache, app_settings, database)
+	addCachableHandler(r, "GET", "/products", productHandler, &cache, app_settings, database)
+	addCachableHandler(r, "GET", "/about", aboutHandler, &cache, app_settings, database)
+	addCachableHandler(r, "GET", "/services", servicesHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/post/:id", postHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/images/:name", imageHandler, &cache, app_settings, database)
 	addCachableHandler(r, "GET", "/images", imagesHandler, &cache, app_settings, database)
 
-	// Pages will querying the page content from the unique 
-	//  link given at the creation of the page step
+	// Pages will be querying the page content from the unique
+	// link given at the creation of the page step
 	addCachableHandler(r, "GET", "/pages/:link", pageHandler, &cache, app_settings, database)
-
 
 	// Static endpoint for image serving
 	r.Static("/images/data", app_settings.ImageDirectory)
@@ -41,19 +42,15 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 	// Add the pagination route as a cacheable endpoint
 	addCachableHandler(r, "GET", "/page/:num", homeHandler, &cache, app_settings, database)
 
-	addCachableHandler(r, "GET", "/about", aboutHandler, &cache, app_settings, database)
-	addCachableHandler(r, "GET", "/services", servicesHandler, &cache, app_settings, database)
-
 	// DO not cache as it needs to handlenew form values
 	r.POST("/contact-send", makeContactFormHandler(app_settings))
 
 	// Where all the static files (css, js, etc) are served from
 	r.Static("/static", "./static")
-	
+
 	r.NoRoute(notFoundHandler(app_settings))
 
 	return r
-
 }
 
 func addCachableHandler(e *gin.Engine, method string, endpoint string, generator Generator, cache *Cache, app_settings common.AppSettings, db database.Database) {
@@ -63,7 +60,7 @@ func addCachableHandler(e *gin.Engine, method string, endpoint string, generator
 		if app_settings.CacheEnabled {
 			cached_endpoint, err := (*cache).Get(c.Request.RequestURI)
 			if err == nil {
-				log.Info().Msgf("serving cached endpoint: %s", c.Request.RequestURI)
+				log.Info().Msgf("cache hit for page: %s", c.Request.RequestURI)
 				c.Data(http.StatusOK, "text/html; charset=utf-8", cached_endpoint.Contents)
 				return
 			}
@@ -143,7 +140,9 @@ func notFoundHandler(app_settings common.AppSettings) func(*gin.Context) {
 			c.JSON(http.StatusInternalServerError, common.ErrorRes("could not render HTML", err))
 			return
 		}
-		c.Data(http.StatusOK, "text/html; charset=utf-8", buffer)
+
+		c.Data(http.StatusNotFound, "text/html; charset=utf-8", buffer)
 	}
+
 	return handler
 }
