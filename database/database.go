@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
-
+	"encoding/json"
 	"github.com/google/uuid"
 	"github.com/andrenormanlang/common"
 	"github.com/rs/zerolog/log"
@@ -19,8 +19,9 @@ type Database interface {
 	DeletePost(id int) (int, error)
 	AddPage(title string, content string, link string) (int, error)
 	GetPage(link string) (common.Page, error)
-	AddCard(title string, image string, schema string, content string) (string, error)
-	AddCardSchema(json_id string, json_schema string, json_title string) (string, error)
+	AddCard(image string, schema string, content string) (string, error)
+	AddCardSchema(json_schema string, json_title string) (string, error)
+	GetCardSchema(uuid string) (common.CardSchema, error)
 }
 
 type SqlDatabase struct {
@@ -185,11 +186,35 @@ func (db SqlDatabase) GetPage(link string) (common.Page, error) {
 // / This function adds the card metadata to the cards table.
 // / Returns the uuid as a string if successful, otherwise error
 // / won't be null
-func (db SqlDatabase) AddCard(title string, image string, schema string, content string) (string, error) {
+func (db SqlDatabase) AddCard(image string, schema_uuid string, content string) (string, error) {
+
+	schema, err := db.GetCardSchema(schema_uuid)
+	if err != nil {
+		return "", err
+	}
+
+	tx, err := db.Connection.Begin()
+	if err != nil {
+		return "", err
+	}
+	defer func() {
+		if commit_err := tx.Commit(); commit_err != nil {
+			err = errors.Join(err, tx.Rollback(), commit_err)
+		}
+	}()
 
 	uuid := uuid.New().String()
 
-	_, err := db.Connection.Exec("INSERT INTO cards(uuid, image_location, json_data, json_schema) VALUES(?, ?, ?, ?)", uuid, image, content, schema)
+	_, err = tx.Exec("INSERT INTO cards(uuid, image_location, json_data, json_schema) VALUES(UuidToBin(?), ?, ?, ?)", uuid, image, content, schema_uuid)
+	if err != nil {
+		return "", err
+	}
+
+	schema.Cards = append(schema.Cards, uuid)
+	cards_string, err := json.Marshal(schema.Cards)
+	fmt.Printf("UPDATE card_schemas SET card_ids = %s WHERE uuid = UuidToBin(%s);", cards_string, schema_uuid)
+
+	_, err = tx.Exec("UPDATE card_schemas SET card_ids = ? WHERE uuid = UuidToBin(?);", cards_string, schema_uuid)
 	if err != nil {
 		return "", err
 	}
@@ -197,13 +222,13 @@ func (db SqlDatabase) AddCard(title string, image string, schema string, content
 	return uuid, nil
 }
 
-func (db SqlDatabase) AddCardSchema(json_id string, json_schema string, json_title string) (string, error) {
+func (db SqlDatabase) AddCardSchema(json_schema string, json_title string) (string, error) {
 	uuid := uuid.New().String()
 
 	_, err := db.Connection.Exec(
-		"INSERT INTO card_schemas(uuid, json_id, json_schema, json_title, card_ids) VALUES(?, ?, ?, ?)",
+		"INSERT INTO card_schemas(uuid, json_id, json_schema, json_title, card_ids) VALUES(UuidToBin(?), ?, ?, ?, ?)",
 		uuid,
-		json_id,
+		"some_id",
 		json_schema,
 		json_title,
 		"[]")
@@ -213,6 +238,31 @@ func (db SqlDatabase) AddCardSchema(json_id string, json_schema string, json_tit
 	}
 
 	return uuid, nil
+}
+
+func (db SqlDatabase) GetCardSchema(id string) (schema common.CardSchema, err error) {
+	rows, err := db.Connection.Query("SELECT json_schema, json_title, card_ids FROM card_schemas WHERE uuid=UuidToBin(?);", id)
+	if err != nil {
+		return common.CardSchema{}, err
+	}
+
+	defer func() {
+		err = errors.Join(rows.Close())
+	}()
+
+	rows.Next()
+	var card_ids_string string
+	if err = rows.Scan(&schema.Schema, &schema.Title, &card_ids_string); err != nil {
+		return common.CardSchema{}, err
+	}
+
+	// We need to parse the schemas here
+	err = json.Unmarshal([]byte(card_ids_string), &schema.Cards)
+	if err != nil {
+		return common.CardSchema{}, fmt.Errorf("can't parse card ids json: %v", err)
+	}
+
+	return schema, nil
 }
 
 func MakeSqlConnection(user string, password string, address string, port int, database string) (SqlDatabase, error) {
@@ -239,7 +289,6 @@ func MakeSqlConnection(user string, password string, address string, port int, d
 		Connection: db,
 	}, nil
 }
-
 
 // package database
 

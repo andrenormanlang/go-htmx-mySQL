@@ -54,7 +54,7 @@ func MakeNavBar(links []common.Link) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header><nav class=\"fixed bg-gray-800 p-4 top-0 w-full inline\"><div class=\"container mx-auto flex justify-between items-center\"><div class=\"flex content-center\"><a href=\"/\" class=\"text-white text-4xl font-bold align-center\">CMS & GO</a></div><div class=\"flex justify-end items-center\"><div class=\"hidden md:flex space-x-4 items-center\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header class=\"navbar fixed top-0 left-0 right-0 z-100\"><nav class=\"fixed bg-gray-800 p-4 top-0 w-full inline\"><div class=\"container mx-auto flex justify-between items-center\"><div class=\"flex content-center\"><a href=\"/\" class=\"text-white text-4xl font-bold align-center\">CMS and GO</a></div><div class=\"flex justify-end items-center\"><div class=\"hidden md:flex space-x-4 items-center\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -75,7 +75,7 @@ func MakeNavBar(links []common.Link) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(link.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/header.templ`, Line: 36, Col: 48}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/header.templ`, Line: 38, Col: 19}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -116,7 +116,7 @@ func MakeNavBar(links []common.Link) templ.Component {
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(
 				link.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/header.templ`, Line: 52, Col: 14}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/header.templ`, Line: 55, Col: 14}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {

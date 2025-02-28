@@ -1,6 +1,7 @@
 package admin_app
 
 import "github.com/andrenormanlang/common"
+import "encoding/json"
 
 // Extracted all bindings and requests structs into a single package to
 // organize the data in a simpler way. Every domain object supporting
@@ -40,14 +41,40 @@ type DeleteImageBinding struct {
 }
 
 type AddCardRequest struct {
-	Title   string `json:"title"`
-	Image   string `json:"image"`
+	Image   string `json:"image_location"`
 	Schema  string `json:"schema"`
-	Content string `json:"content"`
+	Content string `json:"data"`
 }
 
 type AddCardSchemaRequest struct {
-	JsonId     string `json:"$id"`
-	JsonSchema string `json:"$schema"`
 	JsonTitle  string `json:"title"`
+	JsonSchema string `json:"schema"`
 }
+
+// Custom unmarshaller if you need more control
+func (c *AddCardSchemaRequest) UnmarshalJSON(data []byte) error {
+	// Use a map to first parse the entire JSON
+	var obj_map map[string]json.RawMessage
+	err := json.Unmarshal(data, &obj_map); 
+	if err != nil {
+		return err
+	}
+	
+	// Extract the title as normal
+	if title_bytes, ok := obj_map["title"]; ok && title_bytes != nil {
+		var title string
+		if err := json.Unmarshal(title_bytes, &title); err != nil {
+			return err
+		}
+		c.JsonTitle = title
+	}
+	
+	// Extract a schema as a raw string
+	if schema_bytes, ok := obj_map["schema"]; ok && schema_bytes != nil {
+		// Convert the raw schema to a string, preserving the JSON structure
+		c.JsonSchema = string(schema_bytes)
+	}
+	
+	return nil
+}
+

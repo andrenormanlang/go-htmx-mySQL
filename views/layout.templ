@@ -8,12 +8,14 @@ templ MakeLayout(title string, links []Link, content templ.Component) {
 		// This should go into Make HTML Headers
 		<head>
 			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<title>{ title }</title>
 			<script src="/static/scripts/htmx.min.js"></script>
 			<script src="/static/scripts/client-side-templates.js"></script>
 			<script src="/static/scripts/application.js" defer></script>
 			<link rel="icon" href="/static/assets/favicon.ico" type="image/x-icon"/>
 			<link rel="stylesheet" href="/static/css/style.css"/>
+			<link rel="stylesheet" href="/static/css/tailwind.css"/>
 		</head>
 		<body class="relative bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
 			@MakeNavBar(links)
@@ -21,6 +23,7 @@ templ MakeLayout(title string, links []Link, content templ.Component) {
 				@content
 			</main>
 			@MakeFooter()
+			<script src="/static/js/theme.js"></script>
 		</body>
 	</html>
 }
