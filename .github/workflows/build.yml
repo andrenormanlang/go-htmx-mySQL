@@ -9,7 +9,7 @@ jobs:
   build:
     name: Build ⚒️
 
-    runs-on: root-latest
+    runs-on: ubuntu-latest
     container:
       image: andrenormanlang/cms-golang:01
       options: --user 1001
@@ -21,10 +21,10 @@ jobs:
       run: make build
     - name: Package 📦
       run: |
-        mkdir root-build
-        cp tmp/cmsgo cmsgo-root-build/
-        cp tmp/cmsgo-admin cmsgo-root-build/
+        mkdir -p cmsgo-build
+        cp tmp/cmsgo cmsgo-build/
+        cp tmp/cmsgo-admin cmsgo-build/
     - uses: actions/upload-artifact@v3
       with:
-        name: cmsgo-root-build
-        path: cmsgo-root-build
+        name: cmsgo-build
+        path: cmsgo-build

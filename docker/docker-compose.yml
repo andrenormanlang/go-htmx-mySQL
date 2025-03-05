@@ -11,6 +11,7 @@ services:
         target: /cmsgo
         volume:
           nocopy: true
+    working_dir: /cmsgo
     command: /cmsgo/docker/start-app.sh --app
     depends_on:
       mariadb:
@@ -29,6 +30,7 @@ services:
         target: /cmsgo  # Keep the same mount point as cms_and_go_app
         volume:
           nocopy: true
+    working_dir: /cmsgo
     command: /cmsgo/docker/start-app.sh --admin  # Use the --admin argument
     depends_on:
       mariadb:

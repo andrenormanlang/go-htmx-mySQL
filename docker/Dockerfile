@@ -34,3 +34,16 @@ RUN apt-get update \
     && rm -rf golang-install \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/lib/gcc/x86_64-linux-gnu/7*
+
+# Create a non-root user for running applications
+RUN groupadd -g 1001 appuser && \
+    useradd -u 1001 -g appuser -s /bin/bash -m appuser
+
+# Set working directory
+WORKDIR /app
+
+# Switch to non-root user for better security
+USER appuser
+
+# Default command
+CMD ["/bin/bash"]
