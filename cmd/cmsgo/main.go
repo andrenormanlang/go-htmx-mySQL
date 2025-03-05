@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/andrenormanlang/app"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
 )
 

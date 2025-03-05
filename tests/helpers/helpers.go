@@ -9,12 +9,12 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
+	"github.com/andrenormanlang/common"
+	"github.com/andrenormanlang/database"
 	sqle "github.com/dolthub/go-mysql-server"
 	"github.com/dolthub/go-mysql-server/memory"
 	"github.com/dolthub/go-mysql-server/server"
 	"github.com/dolthub/go-mysql-server/sql"
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
 )
 
 //go:generate ../../../migrations ./migrations

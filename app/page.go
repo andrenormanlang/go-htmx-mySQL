@@ -1,13 +1,12 @@
 package app
 
 import (
-
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
 	"github.com/andrenormanlang/views"
+	"github.com/gin-gonic/gin"
 )
 
 func pageHandler(c *gin.Context, app_settings common.AppSettings, database database.Database) ([]byte, error) {

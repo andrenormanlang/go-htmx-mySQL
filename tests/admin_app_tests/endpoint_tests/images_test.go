@@ -11,10 +11,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/fossoreslp/go-uuid-v4"
 	admin_app "github.com/andrenormanlang/admin-app"
 	"github.com/andrenormanlang/tests/helpers"
 	"github.com/andrenormanlang/tests/mocks"
+	"github.com/fossoreslp/go-uuid-v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

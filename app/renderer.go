@@ -6,7 +6,6 @@ import (
 	"github.com/a-h/templ"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-
 )
 
 // / This function will render the templ component into

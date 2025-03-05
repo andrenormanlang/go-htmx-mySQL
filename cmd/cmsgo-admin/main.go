@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
 	admin_app "github.com/andrenormanlang/admin-app"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
 )
 
@@ -47,14 +47,12 @@ func main() {
 	}
 
 	r := admin_app.SetupRoutes(app_settings, database)
-    err = r.Run(fmt.Sprintf("localhost:%d", app_settings.WebserverPort)) // Use WebserverPort instead of AdminPort
-    if err != nil {
-        log.Error().Msgf("could not run app: %v", err)
-        os.Exit(-1)
-    }
+	err = r.Run(fmt.Sprintf("localhost:%d", app_settings.WebserverPort)) // Use WebserverPort instead of AdminPort
+	if err != nil {
+		log.Error().Msgf("could not run app: %v", err)
+		os.Exit(-1)
+	}
 }
-
-
 
 // package main
 

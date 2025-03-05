@@ -9,18 +9,16 @@ import (
 	// lua "github.com/yuin/gopher-lua"
 )
 
-
 // func SetupRoutes(app_settings common.AppSettings, database database.Database, plugins map[string]*lua.LState) *gin.Engine {
 
-	// r := gin.Default()
-	// // r.Run(":8081")
-	// r.MaxMultipartMemory = 1
+// r := gin.Default()
+// // r.Run(":8081")
+// r.MaxMultipartMemory = 1
 
 // 	post_hook, ok := hooks["add_post"]
 // 	if !ok {
 // 		log.Fatalf("Could not find hook for add_post")
 // 	}
-
 
 // 	r.GET("/posts/:id", getPostHandler(database))
 // 	r.POST("/posts", postPostHandler(database, shortcode_handlers,post_hook.(plugins.PostHook)))
@@ -38,7 +36,6 @@ import (
 func SetupRoutes(app_settings common.AppSettings, database database.Database) *gin.Engine {
 
 	r := gin.Default()
-	// r.Run(":8081")
 	r.MaxMultipartMemory = 1
 
 	r.GET("/posts/:id", getPostHandler(database))
@@ -51,8 +48,10 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 
 	r.POST("/pages", postPageHandler(database))
 
-	r.POST("/card-schemas", postSchemaHandler(database))
+	r.GET("/cards/:schema", getCardHandler(database))
+	r.GET("/cards/:schema/:limit/:page", getCardHandler(database))
 	r.POST("/cards", postCardHandler(database))
+	r.POST("/card-schemas", postSchemaHandler(database))
 
 	return r
 }

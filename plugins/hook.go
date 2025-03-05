@@ -1,6 +1,7 @@
-package plugins 
+package plugins
 
 import lua "github.com/yuin/gopher-lua"
+
 type Hook struct {
 	Plugins map[string][]*lua.LState
 }

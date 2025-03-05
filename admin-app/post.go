@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/gin-gonic/gin"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
+	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
 
@@ -152,8 +152,6 @@ func checkRequiredData(addPostRequest AddPostRequest) error {
 	return nil
 }
 
-
-
 // package admin_app
 
 // import (
@@ -195,7 +193,7 @@ func checkRequiredData(addPostRequest AddPostRequest) error {
 // 	}
 // }
 
-// func postPostHandler(database database.Database, plugins map[string][]*lua.LState) func(*gin.Context) {	
+// func postPostHandler(database database.Database, plugins map[string][]*lua.LState) func(*gin.Context) {
 // 	return func(c *gin.Context) {
 // 		var add_post_request AddPostRequest
 // 		if c.Request.Body == nil {
@@ -244,7 +242,7 @@ func checkRequiredData(addPostRequest AddPostRequest) error {
 // 					log.Error().Msgf("error running plugin: %v", err)
 // 					continue
 // 				}
-				
+
 // 				plugin.CheckString()
 // 				value := plugin.GetGlobal("result")
 // 				if ret_type := value.Type().String(); ret_type != "string" {
@@ -252,7 +250,7 @@ func checkRequiredData(addPostRequest AddPostRequest) error {
 // 				} else if ret_type == "" {
 // 					return "", fmt.Errorf("error running %s shortcode: returned empty string", key)
 // 				}
-// 			} 
+// 			}
 // 			// This is all making sure that each Lua plugin
 // 			// registered to "post_create" runs and can modify
 // 			// the post before adding to the database
@@ -283,7 +281,6 @@ func checkRequiredData(addPostRequest AddPostRequest) error {
 // 		})
 // 	}
 // }
-
 
 // func putPostHandler(database database.Database) func(*gin.Context) {
 // 	return func(c *gin.Context) {

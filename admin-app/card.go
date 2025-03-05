@@ -13,6 +13,48 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+func getCardHandler(database database.Database) func(*gin.Context) {
+	return func(c *gin.Context) {
+
+		var get_card_request GetCardRequest
+
+		err := c.ShouldBindUri(&get_card_request)
+		if err != nil {
+			log.Error().Msgf("could not bind url params: %v", err)
+			c.JSON(http.StatusBadRequest, common.MsgErrorRes("invalid card request, missing information"))
+			return
+		}
+
+		if (get_card_request.Limit == 0) && (get_card_request.Page != 0) {
+			log.Error().Msgf("card limit is 0 but pages is %d", get_card_request.Page)
+			c.JSON(http.StatusBadRequest, common.MsgErrorRes("card limit is 0 but page is not"))
+			return
+		}
+
+		if (get_card_request.Page == 0) && (get_card_request.Limit != 0) {
+			log.Error().Msgf("card page is 0 but limit is %d", get_card_request.Limit)
+			c.JSON(http.StatusBadRequest, common.MsgErrorRes("card page is 0 but limit is not"))
+			return
+		}
+
+		limit := get_card_request.Limit
+		page := get_card_request.Page
+		if (get_card_request.Limit == 0) && (get_card_request.Page == 0) {
+			limit = 10
+			page = 0
+		}
+
+		cards, err := database.GetCards(get_card_request.Schema, int(limit), int(page))
+		if err != nil {
+			log.Error().Msgf("could not get cards: %v", err)
+			c.JSON(http.StatusBadRequest, common.MsgErrorRes("invalid card schema uuid"))
+			return
+		}
+
+		c.JSON(http.StatusOK, cards)
+	}
+}
+
 func postCardHandler(database database.Database) func(*gin.Context) {
 	return func(c *gin.Context) {
 		var add_card_request AddCardRequest
@@ -82,7 +124,10 @@ func validateCardAgainstSchema(card_data string, json_schema string) error {
 	}
 
 	json_map := make(map[string]interface{})
-	json.Unmarshal([]byte(card_data), &json_map)
+	err = json.Unmarshal([]byte(card_data), &json_map)
+	if err != nil {
+		return fmt.Errorf("failed to parse card json : %v", err)
+	}
 
 	result := schema.Validate(json_map)
 	if !result.IsValid() {

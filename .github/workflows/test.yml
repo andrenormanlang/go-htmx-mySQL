@@ -8,17 +8,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: name: Tests
-
-on: [workflow_call]
-
-jobs:
-  linters:
-    name: Tests 🧪
-
-    runs-on: ubuntu-latest
-    container:
-      image: andrenormanlang/cms-golang:0.1
+      image: andrenormanlang/cmsgo-golang:0.4
       options: --user 1001
 
     steps:
@@ -33,23 +23,8 @@ jobs:
       run: |
         make prepare_env
         go test -coverprofile=coverage.out -covermode=atomic ./... -v
-
-    - name: Upload coverage to Codecov 📓
-      uses: codecov/codecov-action@v3
-      options: --user 1001
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Generating templ files
-      run: |
-        templ generate
-      shell: bash
-    
-    - name: Running Go Tests 🧪
-      run: |
-        make prepare_env
-        go test -coverprofile=coverage.out -covermode=atomic ./... -v
+        cat coverage.out | grep -v "urchin/tests" > coverage_source_only.out
+        rm coverage.out
 
     - name: Upload coverage to Codecov 📓
       uses: codecov/codecov-action@v3

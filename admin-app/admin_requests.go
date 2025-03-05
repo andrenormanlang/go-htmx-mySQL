@@ -6,6 +6,9 @@ import "encoding/json"
 // Extracted all bindings and requests structs into a single package to
 // organize the data in a simpler way. Every domain object supporting
 // CRUD endpoints has their own structures to handle the http methods.
+// Extracted all bindings and requests structs into a single package to
+// organize the data in a simpler way. Every domain object supporting
+// CRUD endpoints has their own structures to handle the http methods.
 
 type AddPageRequest struct {
 	Title   string `json:"title"`
@@ -46,35 +49,41 @@ type AddCardRequest struct {
 	Content string `json:"data"`
 }
 
+type GetCardRequest struct {
+	Schema string `uri:"schema" binding:"required"`
+	Limit  uint32 `uri:"limit"`
+	Page   uint32 `uri:"page"`
+}
+
 type AddCardSchemaRequest struct {
 	JsonTitle  string `json:"title"`
 	JsonSchema string `json:"schema"`
 }
 
-// Custom unmarshaller if you need more control
+// UnmarshalJSON is a custom unmarshaller for Content
 func (c *AddCardSchemaRequest) UnmarshalJSON(data []byte) error {
-	// Use a map to first parse the entire JSON
-	var obj_map map[string]json.RawMessage
-	err := json.Unmarshal(data, &obj_map); 
+
+	// Create a map to hold the raw JSON
+	var obj_map map[string]*json.RawMessage
+	err := json.Unmarshal(data, &obj_map)
 	if err != nil {
 		return err
 	}
-	
-	// Extract the title as normal
+
+	// Extract title as normal
 	if title_bytes, ok := obj_map["title"]; ok && title_bytes != nil {
 		var title string
-		if err := json.Unmarshal(title_bytes, &title); err != nil {
+		if err := json.Unmarshal(*title_bytes, &title); err != nil {
 			return err
 		}
 		c.JsonTitle = title
 	}
-	
-	// Extract a schema as a raw string
+
+	// Extract schema as a raw string
 	if schema_bytes, ok := obj_map["schema"]; ok && schema_bytes != nil {
-		// Convert the raw schema to a string, preserving the JSON structure
-		c.JsonSchema = string(schema_bytes)
+		// Convert the raw schema to a string, preserving its JSON structure
+		c.JsonSchema = string(*schema_bytes)
 	}
-	
+
 	return nil
 }
-

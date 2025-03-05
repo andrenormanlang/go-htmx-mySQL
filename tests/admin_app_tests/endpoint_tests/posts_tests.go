@@ -12,7 +12,6 @@ import (
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/tests/mocks"
 	"github.com/stretchr/testify/assert"
-
 )
 
 var app_settings = common.AppSettings{

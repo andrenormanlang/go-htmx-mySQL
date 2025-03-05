@@ -8,10 +8,10 @@ import (
 	"net/mail"
 	"net/url"
 
-	"github.com/gin-gonic/gin"
 	"github.com/andrenormanlang/common"
 	"github.com/andrenormanlang/database"
 	"github.com/andrenormanlang/views"
+	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
 

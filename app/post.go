@@ -1,16 +1,15 @@
 package app
 
 import (
-
 	"net/http"
 
+	"github.com/andrenormanlang/common"
+	"github.com/andrenormanlang/database"
+	"github.com/andrenormanlang/views"
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
-	"github.com/andrenormanlang/views"
 	"github.com/rs/zerolog/log"
 )
 

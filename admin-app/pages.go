@@ -28,7 +28,7 @@ func postPageHandler(database database.Database) func(*gin.Context) {
 
 		decoder := json.NewDecoder(c.Request.Body)
 		err := decoder.Decode(&add_page_request)
-		
+
 		// err = checkRequiredPageData(add_page_request)
 		if err != nil {
 			log.Warn().Msgf("invalid page request: %v", err)
@@ -149,7 +149,7 @@ func validateLink(link string) error {
 		is_uppercase := (char_val >= 65) && (char_val <= 90)
 		is_lowercase := (char_val >= 97) && (char_val <= 122)
 		is_sign := (char_val == '_') || (char_val == '-')
-	
+
 		if !(is_uppercase || is_lowercase || is_sign) {
 			return fmt.Errorf("invalid character in link %s", string(char))
 		}
