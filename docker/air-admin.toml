@@ -1,0 +1,27 @@
+root = "/cmsgo"
+tmp_dir = "tmp"
+build_dir = "tmp"
+
+[build]
+cmd = "go build -o ./tmp/cmsgo-admin ./cmd/admin/main.go"
+bin = "./tmp/cmsgo-admin"
+include_ext = ["go", "templ"]
+exclude_dir = ["assets", "tmp", "vendor", "migrations"]
+include_dir = []
+exclude_file = []
+delay = 1000
+stop_on_error = true
+log = "air-admin.log"
+send_interrupt = false
+
+[log]
+time = true
+
+[color]
+main = "magenta"
+watcher = "cyan"
+build = "yellow"
+runner = "green"
+
+[misc]
+clean_on_exit = true

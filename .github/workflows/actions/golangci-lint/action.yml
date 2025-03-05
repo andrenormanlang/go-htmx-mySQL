@@ -1,11 +1,9 @@
 name: golangci-lint step
-description: Runs golangci-lint with specified linters
-
+description: golangci-lint step
 inputs:
   linters:
-    description: "One or more linter names separated by semicolons (e.g. errcheck;staticcheck;unused)."
+    description: Linter to run
     required: true
-
 runs:
   using: composite
   steps:
@@ -13,16 +11,15 @@ runs:
       run: |
         templ generate
       shell: bash
-
-    - name: Prepare linter command
+        
+    - name: prepping lint commands
       id: set-command
       run: |
         export LINTERS="${{ inputs.linters }}"
-        # Turn semicolon-separated linters into multiple -E flags
         export LINTER_CMD="golangci-lint run --timeout 2m --disable-all -E ${LINTERS//;/ -E }"
         echo "linter_cmd=${LINTER_CMD}" >> $GITHUB_OUTPUT
       shell: bash
-
-    - name: Run the linter
+      
+    - name: running the linter command
       run: eval ${{ steps.set-command.outputs.linter_cmd }}
       shell: bash
