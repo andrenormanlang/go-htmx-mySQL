@@ -17,13 +17,28 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       name: Checking Out Repo 👀
+    - name: Debug Environment 🔍
+      run: |
+        pwd
+        ls -la
+        go version
+        echo "OS: $OS"
+        echo "GOOS: $GOOS"
+    - name: Create Build Directory 📁
+      run: mkdir -p tmp
     - name: Golang Build 🐹
       run: make build
+    - name: Debug Build Output 🔍
+      run: |
+        ls -la
+        ls -la tmp/ || echo "tmp directory does not exist or is empty"
     - name: Package 📦
       run: |
         mkdir -p cmsgo-build
-        cp tmp/cmsgo cmsgo-build/
-        cp tmp/cmsgo-admin cmsgo-build/
+        ls -la tmp/ || echo "tmp directory does not exist or is empty"
+        cp tmp/cmsgo cmsgo-build/ || echo "Failed to copy cmsgo"
+        cp tmp/cmsgo-admin cmsgo-build/ || echo "Failed to copy cmsgo-admin"
+        ls -la cmsgo-build/ || echo "cmsgo-build directory does not exist or is empty"
     - uses: actions/upload-artifact@v4
       with:
         name: cmsgo-build
