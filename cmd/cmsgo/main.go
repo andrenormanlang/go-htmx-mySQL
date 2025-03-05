@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	config_toml := flag.String("config", "", "path to the config to be used")
+	config_toml := flag.String("config", os.Getenv("CMSGO_CONFIG"), "path to the config to be used")
 	flag.Parse()
 
 	var app_settings common.AppSettings

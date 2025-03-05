@@ -1,9 +1,9 @@
-root = "/cmsgo"
+root = "/gocms"
 tmp_dir = "tmp"
 build_dir = "tmp"
 
 [build]
-cmd = "go build -o ./tmp/cmsgo ./cmd/app/main.go"
+cmd = "go build -o ./tmp/cmsgo ./cmd/cmsgo/main.go"
 bin = "./tmp/cmsgo"
 include_ext = ["go", "templ"]
 exclude_dir = ["assets", "tmp", "vendor", "migrations"]
@@ -25,3 +25,6 @@ runner = "green"
 
 [misc]
 clean_on_exit = true
+
+[run]
+args = ["--config", "/gocms/cmsgo_config_docker.toml"]

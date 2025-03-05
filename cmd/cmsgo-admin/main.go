@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 
 	admin_app "github.com/andrenormanlang/admin-app"
 	"github.com/andrenormanlang/common"
@@ -17,7 +18,7 @@ func main() {
 	// in this APP
 	common.SetupLogger()
 
-	config_toml := flag.String("config", "", "path to config toml file")
+	config_toml := flag.String("config", os.Getenv("CMSGO_CONFIG"), "path to config toml file")
 	flag.Parse()
 
 	var app_settings common.AppSettings
@@ -46,10 +47,19 @@ func main() {
 		os.Exit(-1)
 	}
 
+	// Use PORT environment variable if set, otherwise use WebserverPort from config
+	port := app_settings.WebserverPort
+	if portEnv := os.Getenv("PORT"); portEnv != "" {
+		if p, err := strconv.Atoi(portEnv); err == nil {
+			port = p
+			log.Info().Msgf("Using PORT environment variable: %d", port)
+		}
+	}
+
 	r := admin_app.SetupRoutes(app_settings, database)
-	err = r.Run(fmt.Sprintf("localhost:%d", app_settings.WebserverPort)) // Use WebserverPort instead of AdminPort
+	err = r.Run(fmt.Sprintf(":%d", port))
 	if err != nil {
-		log.Error().Msgf("could not run app: %v", err)
+		log.Fatal().Msgf("could not start server: %v", err)
 		os.Exit(-1)
 	}
 }
@@ -92,7 +102,7 @@ func main() {
 // 	// in this APP
 // 	common.SetupLogger()
 
-// 	config_toml := flag.String("config", "", "path to config toml file")
+// 	config_toml := flag.String("config", os.Getenv("CMSGO_CONFIG"), "path to config toml file")
 // 	flag.Parse()
 
 // 	var app_settings common.AppSettings

@@ -5,7 +5,7 @@ database_address = "mariadb"
 database_user = "root"
 
 # Password for the database user
-database_password = "shiva7"
+database_password = "root"
 
 # port
 database_port = 3306
@@ -29,5 +29,8 @@ links = [
     { name = "About", href = "/about", title = "About page" },
     { name = "Services", href = "/services", title = "Services page" },
     { name = "Images", href = "/images", title = "Images page" },
+    { name = "Products", href = "/products", title = "Product cards page"},
     { name = "Contact", href = "/contact", title = "Contacts page" },
 ]
+
+

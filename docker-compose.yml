@@ -6,11 +6,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - type: bind
-        source: .
-        target: /gocms
-        volume:
-          nocopy: true
+      - .:/gocms
     working_dir: /gocms
     command: ./compose-run.sh
     depends_on:
@@ -25,11 +21,7 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - type: bind
-        source: .
-        target: /gocms
-        volume:
-          nocopy: true
+      - .:/gocms
     working_dir: /gocms
     command: ./compose-admin-run.sh
     depends_on:
@@ -44,8 +36,13 @@ services:
   mariadb:
     image: mariadb:11.2.3-jammy
     container_name: mariadb
-    env_file:
-      - ./.dev.env
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=cms-and-go
+      - MARIADB_USER=cmsuser
+      - MARIADB_PASSWORD=cmspassword
+    volumes:
+      - mariadb_data:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mariadb", "-u", "root", "-proot", "-e", "USE cms-and-go" ]
       interval: 10s
@@ -56,3 +53,6 @@ services:
 
 networks:
   common-net: {}
+
+volumes:
+  mariadb_data:
