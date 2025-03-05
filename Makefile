@@ -26,6 +26,9 @@ clean:
 	$(GOCMD) clean
 	rm -rf $(BUILD_DIR)
 
+format:
+	gofmt -s -w .
+
 install-tools:
 	go install github.com/pressly/goose/v3/cmd/goose@v3.18.0
 	go install github.com/a-h/templ/cmd/templ@v0.2.543 
@@ -39,4 +42,4 @@ install-tailwindcss:
 			&& mv tailwindcss-linux-x64 tailwindcss; \
 	fi 
 
-.PHONY: all build test clean
+.PHONY: all build test clean format

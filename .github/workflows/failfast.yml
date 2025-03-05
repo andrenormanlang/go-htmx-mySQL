@@ -17,6 +17,9 @@ jobs:
     - name: Prepare Environment
       run: make prepare_env
     
+    - name: Format Code
+      run: make format
+    
     - uses: ./.github/workflows/actions/golangci-lint
       name: Running Linters 🧪
       with:
