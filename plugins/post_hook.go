@@ -15,6 +15,7 @@ type PostHook struct {
 
 // This runs at the start up, when you register
 // all the plugins you want
+// This is where you would load all the plugins
 func (p *PostHook) Register(plugin Plugin) {
 	p.plugins = append(p.plugins, plugin)
 }
