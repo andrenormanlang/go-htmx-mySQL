@@ -1,18 +1,14 @@
 version: '3.8'
 
 services:
-  cms_and_go_app:
+  golang_app:
     image: andrenormanlang/cms-golang:01
     ports:
-      - "8080:8080"  # Expose on host port 8080
+      - "8080:8080"
     volumes:
-      - type: bind
-        source: ..
-        target: /cmsgo
-        volume:
-          nocopy: true
-    working_dir: /cmsgo
-    command: /cmsgo/docker/start-app.sh --app
+      - ..:/gocms
+    working_dir: /gocms
+    command: ./docker/compose-run.sh
     depends_on:
       mariadb:
         condition: service_healthy
@@ -20,21 +16,19 @@ services:
     networks:
       - common-net
 
-  cms_and_go_admin_app:
+  golang_admin_app:
     image: andrenormanlang/cms-golang:01
     ports:
-      - "8081:8081"  # Expose on host port 8081
+      - "8081:8081"
     volumes:
-      - type: bind
-        source: ..
-        target: /cmsgo  # Keep the same mount point as cms_and_go_app
-        volume:
-          nocopy: true
-    working_dir: /cmsgo
-    command: /cmsgo/docker/start-app.sh --admin  # Use the --admin argument
+      - ..:/gocms
+    working_dir: /gocms
+    command: ./docker/compose-admin-run.sh
     depends_on:
       mariadb:
         condition: service_healthy
+    environment:
+      - PORT=8081
     restart: always
     networks:
       - common-net
@@ -42,8 +36,13 @@ services:
   mariadb:
     image: mariadb:11.2.3-jammy
     container_name: mariadb
-    env_file:
-      - ../.dev.env
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=cms-and-go
+      - MARIADB_USER=cmsuser
+      - MARIADB_PASSWORD=cmspassword
+    volumes:
+      - mariadb_data:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mariadb", "-u", "root", "-proot", "-e", "USE cms-and-go" ]
       interval: 10s
@@ -54,3 +53,6 @@ services:
 
 networks:
   common-net: {}
+
+volumes:
+  mariadb_data:
