@@ -3,7 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  cmd = "mkdir -p tests/helpers/migrations && go build -v -o ./tmp/cmsgo-admin ./cmd/cmsgo-admin"
+  cmd = "make build"
   args_bin = []
   bin = "./tmp/cmsgo-admin"
   full_bin = "./tmp/cmsgo-admin --config cmsgo_config_wsl.toml"
