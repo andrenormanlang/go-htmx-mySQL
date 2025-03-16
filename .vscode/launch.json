@@ -29,7 +29,7 @@
            "envFile": "${workspaceFolder}/envfile",
            "args": [
                "--config",
-               "${workspaceFolder}/cmsgo_config_admin_debugger.toml"
+               "${workspaceFolder}/cmsgo_config.toml"
            ],
            "showLog": true,
            "trace": "log"

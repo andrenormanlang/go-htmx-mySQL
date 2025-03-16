@@ -8,4 +8,5 @@ cd /gocms/migrations
 GOOSE_DRIVER="mysql" GOOSE_DBSTRING="root:root@tcp(mariadb:3306)/cms-and-go" goose up
 
 cd /gocms
-CMSGO_CONFIG=/gocms/docker/cmsgo_config_docker.toml air -c ./docker/air.toml 
+make build
+air -c ./docker/air.admin.toml 

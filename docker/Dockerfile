@@ -1,13 +1,19 @@
-# Version: 0.1
+# Version: 0.3
 
+#
+# We base our image from the alpine light image
 FROM ubuntu:jammy-20240125
 
+#
+# Environment variables needed for the
+# build system
 ENV TZ=Europe/Stockholm
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV PATH="${PATH}:/usr/local/go/bin"
 
 LABEL maintainer="andrenormanlang@gmail.com"
 
+# install build dependencies 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
     ca-certificates \
@@ -21,10 +27,10 @@ RUN apt-get update \
     && GOBIN=/usr/local/bin go install github.com/pressly/goose/v3/cmd/goose@v3.18.0 \
     && GOBIN=/usr/local/bin go install github.com/a-h/templ/cmd/templ@v0.2.543 \
     && GOBIN=/usr/local/bin go install github.com/cosmtrek/air@v1.49.0 \
-    && wget https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh -P golangci-install \
-    && sh ./golangci-install/install.sh -b /usr/local/bin/ v1.56.2 \
+    && wget https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh -P golangci-install \ 
+    && sh ./golangci-install/install.sh -b /usr/local/bin v1.56.2 \
     && rm -rf ./golangci-install \
-    && apt-get clean \
+    && apt-get clean \  
     && apt-get autoremove -y \
     && apt-get autoremove --purge -y \
     && go clean --cache \
@@ -34,16 +40,3 @@ RUN apt-get update \
     && rm -rf golang-install \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/lib/gcc/x86_64-linux-gnu/7*
-
-# Create a non-root user for running applications
-RUN groupadd -g 1001 appuser && \
-    useradd -u 1001 -g appuser -s /bin/bash -m appuser
-
-# Set working directory
-WORKDIR /app
-
-# Switch to non-root user for better security
-USER appuser
-
-# Default command
-CMD ["/bin/bash"]

@@ -3,10 +3,10 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  cmd = "make build"
+  cmd = "go build -v -o .\\tmp\\cmsgo.exe .\\cmd\\cmsgo"
   args_bin = []
-  bin = "./tmp/cmsgo"
-  full_bin = "./tmp/cmsgo --config ./docker/cmsgo_config.toml"
+  bin = ".\\tmp\\cmsgo.exe"
+  full_bin = ".\\tmp\\cmsgo.exe --config cmsgo_config.toml.exe"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
