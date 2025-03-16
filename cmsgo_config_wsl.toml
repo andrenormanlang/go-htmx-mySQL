@@ -1,0 +1,27 @@
+database_address = "192.168.0.4"
+database_user = "root"
+database_password = "root"
+database_port = 3306
+database_name = "cms-and-go"
+webserver_port = 8080
+admin_port = 8081
+image_dir = "./images"
+cache_enabled = true
+
+[navbar]
+links = [
+    { name = "Home", href = "/", title = "Homepage" },
+    { name = "About", href = "/about", title = "About page" },
+    { name = "Services", href = "/services", title = "Services page" },
+    { name = "Images", href = "/images", title = "Images page" },
+    { name = "Products", href = "/products", title = "Product cards page"},
+    { name = "Contact", href = "/contact", title = "Contacts page" },
+]
+
+[[shortcodes]]
+name = "img"
+plugin = "plugins/image_shortcode.lua"
+
+[[shortcodes]]
+name = "table"
+plugin = "plugins/table_shortcode.lua"
