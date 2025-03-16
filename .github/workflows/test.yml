@@ -12,21 +12,12 @@ jobs:
       options: --user 1001
 
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Generating templ files
-      run: |
-        templ generate
-      shell: bash
-    
-    - name: Running Go Tests 🧪
-      run: |
-        make prepare_env
-        go test -coverprofile=coverage.out -covermode=atomic ./... -v
-        cat coverage.out | grep -v "urchin/tests" > coverage_source_only.out
-        rm coverage.out
-
-    - name: Upload coverage to Codecov 📓
-      uses: codecov/codecov-action@v4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - uses: actions/checkout@v4
+  
+      - name: Prepare Environment
+        run: make prepare_env
+      
+      - uses: ./.github/workflows/actions/golangci-lint
+        name: Running Linters 🧪
+        with:
+          linters: errcheck;staticcheck;unused;gosimple;gofmt

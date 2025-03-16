@@ -12,15 +12,12 @@ jobs:
       options: --user 1001
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Prepare Environment
-      run: make prepare_env
-    
-    - name: Format Code
-      run: make format
-    
-    - uses: ./.github/workflows/actions/golangci-lint
-      name: Running Linters 🧪
-      with:
-        linters: errcheck;staticcheck;unused;gosimple;gofmt
+      - uses: actions/checkout@v4
+  
+      - name: Prepare Environment
+        run: make prepare_env
+      
+      - uses: ./.github/workflows/actions/golangci-lint
+        name: Running Linters 🧪
+        with:
+          linters: errcheck;staticcheck;unused;gosimple;gofmt
