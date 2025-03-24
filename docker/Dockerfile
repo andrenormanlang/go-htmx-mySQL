@@ -11,6 +11,8 @@ ENV TZ=Europe/Stockholm
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV PATH="${PATH}:/usr/local/go/bin"
 
+#
+# Identify the maintainer of an image
 LABEL maintainer="andrenormanlang@gmail.com"
 
 # install build dependencies 

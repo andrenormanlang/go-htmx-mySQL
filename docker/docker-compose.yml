@@ -1,12 +1,14 @@
 services:
   golang_app:
-    image: andrenormanlang/cms-golang:01
+    image: andrenormanlang/cms-golang:latest
     ports:
       - "8080:8080"
     volumes:
       - type: bind
         source: ..
         target: /gocms
+        # volume:
+        #   nocopy: true
     command: /gocms/docker/start-app.sh
     depends_on:
       mariadb:
@@ -16,13 +18,15 @@ services:
       - common-net
 
   golang_admin_app:
-    image: andrenormanlang/cms-golang:01
+    image: andrenormanlang/cms-golang:latest
     ports:
       - "8081:8081"
     volumes:
       - type: bind
         source: ..
         target: /gocms
+        # volume:
+        #   nocopy: true
     command: /gocms/docker/start-admin-app.sh
     depends_on:
       mariadb:
