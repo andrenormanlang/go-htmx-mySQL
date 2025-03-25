@@ -11,7 +11,7 @@ runs:
       run: |
         templ generate
       shell: bash
-
+        
     - name: prepping lint commands
       id: set-command
       run: |
@@ -19,12 +19,7 @@ runs:
         export LINTER_CMD="golangci-lint run --timeout 2m --disable-all -E ${LINTERS//;/ -E }"
         echo "linter_cmd=${LINTER_CMD}" >> $GITHUB_OUTPUT
       shell: bash
-
+      
     - name: running the linter command
-      run: |
-        # Run linters one by one
-        for linter in errcheck staticcheck unused gosimple gofmt; do
-          echo "Running $linter..."
-          golangci-lint run --timeout 2m --disable-all -E $linter --max-same-issues=0 --max-issues-per-linter=0
-        done
+      run: eval ${{ steps.set-command.outputs.linter_cmd }}
       shell: bash
