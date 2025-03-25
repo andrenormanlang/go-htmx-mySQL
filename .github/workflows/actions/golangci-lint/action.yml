@@ -21,5 +21,10 @@ runs:
       shell: bash
 
     - name: running the linter command
-      run: golangci-lint run --timeout 2m --disable-all -E errcheck -E staticcheck -E unused -E gosimple -E gofmt --max-same-issues=0 --max-issues-per-linter=0
+      run: |
+        # Run linters one by one
+        for linter in errcheck staticcheck unused gosimple gofmt; do
+          echo "Running $linter..."
+          golangci-lint run --timeout 2m --disable-all -E $linter --max-same-issues=0 --max-issues-per-linter=0
+        done
       shell: bash
