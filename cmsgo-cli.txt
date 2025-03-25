@@ -4,7 +4,11 @@ GOOSE_DRIVER="mysql" GOOSE_DBSTRING="root:root@/cms-and-go" goose up
 
 go install github.com/cosmtrek/air@latest
 
+LOCAL
 mysql -h localhost -u root -proot cms-and-go
+
+IN DOCKER!
+mysql -h 127.0.0.1 -P 3307 -u cmsgo -pcmsgopw cms-and-go
 
 works in powershell only to close open localhost:
 netstat -ano | findstr :8080

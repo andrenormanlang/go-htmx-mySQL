@@ -210,7 +210,9 @@ func (db SqlDatabase) AddCard(image string, schema_uuid string, content string) 
 
 	uuid := uuid.New().String()
 
-	_, err = tx.Exec("INSERT INTO cards(uuid, image_location, json_data, json_schema) VALUES(UuidToBin(?), ?, ?, ?)", uuid, image, content, schema_uuid)
+	// _, err = tx.Exec("INSERT INTO cards(uuid, image_location, json_data, json_schema) VALUES(UuidToBin(?), ?, ?, ?)", uuid, image, content, schema_uuid)
+	// Below works in Docker too
+	_, err = tx.Exec("INSERT INTO cards(uuid, image_location, json_data, json_schema) VALUES(UuidToBin(?), ?, ?, JSON_OBJECT('id', ?))", uuid, image, content, schema_uuid)
 	if err != nil {
 		return "", err
 	}

@@ -1,6 +1,6 @@
 services:
   golang_app:
-    image: andrenormanlang/cms-golang:latest
+    image: andrenormanlang/cms-golang:0.2
     ports:
       - "8080:8080"
     volumes:
@@ -18,7 +18,7 @@ services:
       - common-net
 
   golang_admin_app:
-    image: andrenormanlang/cms-golang:latest
+    image: andrenormanlang/cms-golang:0.2
     ports:
       - "8081:8081"
     volumes:
@@ -38,6 +38,8 @@ services:
   mariadb:
     image: mariadb:11.2.3-jammy
     container_name: mariadb
+    ports:
+      - "3307:3306"
     env_file:
       - ../.dev.env
     healthcheck:
@@ -45,6 +47,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 10
+    volumes:
+      - mariadb_data:/var/lib/mysql
     networks:
       - common-net
 
