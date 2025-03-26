@@ -20,7 +20,7 @@ prepare_env:
 		cp -r migrations tests/helpers/ 
 
 build: prepare_env install-tailwindcss
-	$(TEMPL) generate
+	$(GOCMD) run github.com/a-h/templ/cmd/templ@v0.2.543 generate
 	GIN_MODE=release $(GOCMD) build -ldflags "-s" -v -o $(BUILD_DIR)/$(BINARY_NAME) $(CMSGO_DIR)
 	GIN_MODE=release $(GOCMD) build -ldflags "-s" -v -o $(BUILD_DIR)/$(ADMIN_BINARY_NAME) $(CMSGO_ADMIN_DIR)
 	./tailwindcss -i ./static/css/custom.css -o ./static/css/style.css --minify
