@@ -8,7 +8,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: andrenormanlang/cms-golang:01
+      image: andrenormanlang/cms-golang:0.3
       options: --user 1001
 
     steps:

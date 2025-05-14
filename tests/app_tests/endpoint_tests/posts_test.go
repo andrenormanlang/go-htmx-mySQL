@@ -6,9 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/andrenormanlang/app"
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/tests/mocks"
+	"github.com/andrenormanlang/go-htmx-mySQL/app"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/tests/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

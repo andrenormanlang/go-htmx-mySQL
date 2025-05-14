@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
-	"github.com/andrenormanlang/views"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/database"
+	"github.com/andrenormanlang/go-htmx-mySQL/views"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )

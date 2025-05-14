@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"github.com/andrenormanlang/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
 )
 
 type DatabaseMock struct {

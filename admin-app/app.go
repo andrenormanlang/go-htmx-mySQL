@@ -3,8 +3,8 @@ package admin_app
 import (
 	// "log"
 
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/database"
 	"github.com/gin-gonic/gin"
 	// lua "github.com/yuin/gopher-lua"
 )

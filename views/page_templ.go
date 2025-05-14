@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-import "github.com/andrenormanlang/common"
+import "github.com/andrenormanlang/go-htmx-mySQL/common"
 
 func MakePage(title string, content string, links []common.Link) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {

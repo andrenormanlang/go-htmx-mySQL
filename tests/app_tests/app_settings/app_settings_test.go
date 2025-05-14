@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/andrenormanlang/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
 	"github.com/pelletier/go-toml/v2"
 	"github.com/stretchr/testify/assert"
 )
@@ -45,6 +45,7 @@ func TestCorrectToml(t *testing.T) {
 				{Name: "Contact", Href: "/contact", Title: "Contacts page"},
 			},
 		},
+		Shortcodes: []common.Shortcode{}, // Initialize empty slice
 	}
 	bytes, err := toml.Marshal(expected)
 	assert.Nil(t, err)

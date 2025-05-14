@@ -9,30 +9,16 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	admin_app "github.com/andrenormanlang/go-htmx-mySQL/admin-app"
+	"github.com/andrenormanlang/go-htmx-mySQL/tests/helpers"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/stretchr/testify/require"
-
-	admin_app "github.com/andrenormanlang/admin-app"
-	"github.com/andrenormanlang/tests/helpers"
-	"github.com/pressly/goose/v3"
+	"github.com/test-go/testify/require"
 )
 
 func TestPostExists(t *testing.T) {
-
-	// This is gonna be the in-memory mysql
-	app_settings := helpers.GetAppSettings(20)
-	go helpers.RunDatabaseServer(app_settings)
-	database, err := helpers.WaitForDb(app_settings)
+	// Setup test database with migrations
+	app_settings, database, err := helpers.SetupTestDatabase()
 	require.Nil(t, err)
-	goose.SetBaseFS(helpers.EmbedMigrations)
-
-	if err := goose.SetDialect("mysql"); err != nil {
-		require.Nil(t, err)
-	}
-
-	if err := goose.Up(database.Connection, "migrations"); err != nil {
-		require.Nil(t, err)
-	}
 
 	// Send the post in
 	add_post_request := admin_app.AddPostRequest{

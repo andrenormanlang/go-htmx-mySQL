@@ -6,9 +6,9 @@ import (
 	"os"
 	// "strconv"
 
-	admin_app "github.com/andrenormanlang/admin-app"
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
+	admin_app "github.com/andrenormanlang/go-htmx-mySQL/admin-app"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/database"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
 )
@@ -35,7 +35,7 @@ func main() {
 	}
 	app_settings = settings
 
-	database, err := database.MakeSqlConnection(
+	database, err := database.MakeMysqlConnection(
 		app_settings.DatabaseUser,
 		app_settings.DatabasePassword,
 		app_settings.DatabaseAddress,
@@ -76,10 +76,10 @@ func main() {
 	// 	"fmt"
 	// 	"os"
 
-	// 	admin_app "github.com/andrenormanlang/admin-app"
-	// 	"github.com/andrenormanlang/common"
-	// 	"github.com/andrenormanlang/database"
-	// 	"github.com/andrenormanlang/plugins"
+	// 	admin_app "github.com/andrenormanlang/go-htmx-mySQL/admin-app"
+	// 	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	// 	"github.com/andrenormanlang/go-htmx-mySQL/database"
+	// 	"github.com/andrenormanlang/go-htmx-mySQL/plugins"
 	// 	_ "github.com/go-sql-driver/mysql"
 	// 	"github.com/rs/zerolog/log"
 	// 	lua "github.com/yuin/gopher-lua"

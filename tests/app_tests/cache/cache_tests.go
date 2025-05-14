@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/andrenormanlang/app"
+	"github.com/andrenormanlang/go-htmx-mySQL/app"
 	"github.com/stretchr/testify/assert"
 )
 

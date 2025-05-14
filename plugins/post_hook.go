@@ -3,7 +3,7 @@ package plugins
 import (
 	"strconv"
 
-	"github.com/andrenormanlang/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
 	lua "github.com/yuin/gopher-lua"
 )
 

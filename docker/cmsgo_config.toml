@@ -2,10 +2,10 @@
 database_address = "mariadb"
 
 # User to access datbase
-database_user = "cmsgo"
+database_user = "root"
 
 # Password for the database user
-database_password = "cmsgopw"
+database_password = "root"
 
 # port
 database_port = 3306

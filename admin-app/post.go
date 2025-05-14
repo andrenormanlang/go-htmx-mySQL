@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/database"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -161,8 +161,8 @@ func checkRequiredData(addPostRequest AddPostRequest) error {
 // 	"regexp"
 // 	"strings"
 
-// 	"github.com/andrenormanlang/common"
-// 	"github.com/andrenormanlang/database"
+// 	"github.com/andrenormanlang/go-htmx-mySQL/common"
+// 	"github.com/andrenormanlang/go-htmx-mySQL/database"
 // 	"github.com/gin-gonic/gin"
 // 	"github.com/rs/zerolog/log"
 // 	lua "github.com/yuin/gopher-lua"

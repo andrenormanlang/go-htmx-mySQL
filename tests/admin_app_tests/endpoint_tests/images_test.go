@@ -11,9 +11,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	admin_app "github.com/andrenormanlang/admin-app"
-	"github.com/andrenormanlang/tests/helpers"
-	"github.com/andrenormanlang/tests/mocks"
+	admin_app "github.com/andrenormanlang/go-htmx-mySQL/admin-app"
+	"github.com/andrenormanlang/go-htmx-mySQL/tests/helpers"
+	"github.com/andrenormanlang/go-htmx-mySQL/tests/mocks"
 	"github.com/fossoreslp/go-uuid-v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -8,9 +8,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	admin_app "github.com/andrenormanlang/admin-app"
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/tests/mocks"
+	admin_app "github.com/andrenormanlang/go-htmx-mySQL/admin-app"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/tests/mocks"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +19,7 @@ var app_settings = common.AppSettings{
 	DatabasePort:     3006,
 	DatabaseUser:     "root",
 	DatabasePassword: "root",
-	DatabaseName:     "urchin",
+	DatabaseName:     "cms-and-go",
 	WebserverPort:    8080,
 	ImageDirectory:   "../../../images",
 }

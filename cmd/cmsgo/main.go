@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/andrenormanlang/app"
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/database"
+	"github.com/andrenormanlang/go-htmx-mySQL/app"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/database"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/zerolog/log"
 )
@@ -31,7 +31,7 @@ func main() {
 
 	app_settings = settings
 
-	db_connection, err := database.MakeSqlConnection(
+	db_connection, err := database.MakeMysqlConnection(
 		app_settings.DatabaseUser,
 		app_settings.DatabasePassword,
 		app_settings.DatabaseAddress,

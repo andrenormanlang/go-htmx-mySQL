@@ -1,6 +1,6 @@
 package views
 
-import "github.com/andrenormanlang/common"
+import "github.com/andrenormanlang/go-htmx-mySQL/common"
 
 templ MakeContactFormWithRecaptcha(recaptcha_sitekey string) {
   <form id="demo-form" class="space-y-4 p-12" method="post" hx-post="/contact-send" hx-target="#contact-form" hx-trigger="verified">

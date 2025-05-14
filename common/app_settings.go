@@ -38,5 +38,10 @@ func ReadConfigToml(filepath string) (AppSettings, error) {
 		return AppSettings{}, err
 	}
 
+	// Initialize empty slice for Shortcodes if nil
+	if config.Shortcodes == nil {
+		config.Shortcodes = []Shortcode{}
+	}
+
 	return config, nil
 }

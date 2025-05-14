@@ -1,6 +1,6 @@
 package views
 
-import "github.com/andrenormanlang/common"
+import "github.com/andrenormanlang/go-htmx-mySQL/common"
 
 templ MakePage(title string, content string, links []common.Link) {
 	@MakeLayout(title, links, templ.Raw(content))

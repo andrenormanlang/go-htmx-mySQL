@@ -12,7 +12,7 @@ import "bytes"
 
 import (
 	"fmt"
-	. "github.com/andrenormanlang/common"
+	. "github.com/andrenormanlang/go-htmx-mySQL/common"
 )
 
 func makePosts(posts []Post) templ.Component {

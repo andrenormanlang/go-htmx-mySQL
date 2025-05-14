@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	admin_app "github.com/andrenormanlang/admin-app"
-	"github.com/andrenormanlang/tests/mocks"
+	admin_app "github.com/andrenormanlang/go-htmx-mySQL/admin-app"
+	"github.com/andrenormanlang/go-htmx-mySQL/tests/mocks"
 	"github.com/stretchr/testify/assert"
 )
 

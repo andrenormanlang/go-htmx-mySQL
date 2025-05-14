@@ -1,23 +1,50 @@
 name: Tests
 
-on: [workflow_call]
+on:
+  workflow_call:
+    secrets:
+      CODECOV_TOKEN:
+        required: true
 
 jobs:
   linters:
     name: Tests 🧪
-
+    env:
+      ImageOS: ubuntu20
     runs-on: ubuntu-latest
     container:
-      image: andrenormanlang/cms-golang:01
-      options: --user 1001
+      image: andrenormanlang/cms-golang:0.3
+      options: --user 0
 
     steps:
-      - uses: actions/checkout@v4
-  
-      - name: Prepare Environment
-        run: make prepare_env
-      
-      - uses: ./.github/workflows/actions/golangci-lint
-        name: Running Linters 🧪
-        with:
-          linters: errcheck;staticcheck;unused;gosimple;gofmt
+    - uses: actions/checkout@v4
+
+    - name: Generating templ files
+      run: |
+        templ generate
+      shell: bash
+    
+    - name: Installing Mariadb 💾
+      env:
+        MYSQL: "mysql -u root -proot"
+      run: |
+        apt update
+        apt install mariadb-server -y
+        service mariadb start
+        mysqladmin -u root password "root"
+        echo "Mysql command prefix: ${MYSQL}"
+        ${MYSQL} -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"
+        ${MYSQL} -e "FLUSH PRIVILEGES"
+
+    - name: Running Go Tests 🧪
+      run: |
+        make prepare_env
+        go test -coverprofile=coverage.out -covermode=atomic ./... -v
+        cat coverage.out | grep -v "go-htmx-mySQL/tests" > coverage_source_only.out
+        rm coverage.out
+
+    - name: Upload coverage to Codecov 📓
+      uses: codecov/codecov-action@v5
+      with:
+        fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}

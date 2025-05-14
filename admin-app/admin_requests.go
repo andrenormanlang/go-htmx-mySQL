@@ -1,6 +1,6 @@
 package admin_app
 
-import "github.com/andrenormanlang/common"
+import "github.com/andrenormanlang/go-htmx-mySQL/common"
 import "encoding/json"
 
 // Extracted all bindings and requests structs into a single package to

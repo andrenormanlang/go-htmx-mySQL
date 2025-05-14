@@ -6,9 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/andrenormanlang/app"
-	"github.com/andrenormanlang/common"
-	"github.com/andrenormanlang/tests/mocks"
+	"github.com/andrenormanlang/go-htmx-mySQL/app"
+	"github.com/andrenormanlang/go-htmx-mySQL/common"
+	"github.com/andrenormanlang/go-htmx-mySQL/tests/mocks"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -52,7 +52,7 @@ func TestIndexFailToGetPosts(t *testing.T) {
 		DatabasePort:     3006,
 		DatabaseUser:     "root",
 		DatabasePassword: "root",
-		DatabaseName:     "urchin",
+		DatabaseName:     "cms-and-go",
 		WebserverPort:    8080,
 	}
 
