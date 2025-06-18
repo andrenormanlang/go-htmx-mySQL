@@ -13,15 +13,25 @@ templ makeImages(images []Image) {
   } else {
     <!-- Modal -->
     <dialog id="modal" class="p-6 rounded-lg shadow-lg max-w-4xl border border-pastel-blue dark:border-pastel-blue-900 bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-    // <dialog onclick="modal.close()" id="modal" class="p-8 max-w-lg border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50 flex flex-col items-center">
-      <img id="modal-image" src="https://loremflickr.com/800/600/girl" class="shadow rounded-lg overflow-hidden border"/>
-      
-      <div class="mt-8">
-        <h4 id="modal-title" class="font-bold text-xl">Unser Title</h4>
-        <p id="modal-excerpt" class="mt-2 text-gray-600">
-          Unset Excerpt
-        </p>
-        <div class="mt-5">
+      <div class="flex flex-col h-full">
+        <!-- Image container with fixed height -->
+        <div class="relative h-[600px] flex items-center justify-center">
+          <img id="modal-image" src="" class="max-h-full max-w-full object-contain rounded-lg"/>
+        </div>
+        
+        <!-- Navigation dots -->
+        <div id="navigation-dots" class="flex justify-center gap-2 mt-4">
+          <!-- Dots will be inserted here by JavaScript -->
+        </div>
+
+        <!-- Image info -->
+        <div class="mt-4">
+          <h4 id="modal-title" class="font-bold text-xl"></h4>
+          <p id="modal-excerpt" class="mt-2 text-gray-600 dark:text-gray-300"></p>
+          <p id="image-counter" class="mt-2 text-sm text-gray-500 dark:text-gray-400"></p>
+        </div>
+        
+        <div class="mt-4 flex justify-end">
           <button type="button" onclick="modal.close()" class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-gray-900">Close</button>
         </div>
       </div>
