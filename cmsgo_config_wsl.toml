@@ -8,6 +8,13 @@ admin_port = 8081
 image_dir = "./images"
 cache_enabled = true
 
+# Recaptcha settings
+recaptcha_sitekey = "6LecCewpAAAAAK7QS2SwuyCIDzwlyXMs4J1Z5LBq"
+recaptcha_secret = "6LecCewpAAAAAPP8Aaxh6jWaDE1xG_MBQa1OOs8f"
+
+# Sticky posts will be expanded on home
+sticky_posts = [2]
+
 [navbar]
 links = [
     { name = "Home", href = "/", title = "Homepage" },
@@ -62,12 +69,3 @@ images = [
     "e67004ec-4c44-4676-bc06-2c5caab56470.json",
     "fda98db9-d827-4788-af85-aa20e68d2f51.json",
 ]
-
-
-[[shortcodes]]
-name = "img"
-plugin = "plugins/image_shortcode.lua"
-
-[[shortcodes]]
-name = "table"
-plugin = "plugins/table_shortcode.lua"

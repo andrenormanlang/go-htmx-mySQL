@@ -21,6 +21,7 @@ require (
 	github.com/test-go/testify v1.1.4
 	github.com/yuin/gopher-lua v1.1.1
 	github.com/zutto/shardedmap v0.0.0-20180201164343-415202d0910e
+	golang.org/x/image v0.28.0
 )
 
 require (
@@ -58,9 +59,9 @@ require (
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/net v0.39.0 // indirect
-	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sync v0.15.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
-	golang.org/x/text v0.25.0 // indirect
+	golang.org/x/text v0.26.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

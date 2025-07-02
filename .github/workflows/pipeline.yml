@@ -2,24 +2,38 @@ name: CMS AND GO CI 🖨️
 
 on:
   push:
-    branches: [ "main","master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main","master" ]
+    branches: [ "main" ]
 
 jobs:
   failfast:
+    name: Fail Fast 🏎️
     uses: ./.github/workflows/failfast.yml
 
   build:
+    name: Build 🧱
     uses: ./.github/workflows/build.yml
     needs: failfast
 
   tests:
     uses: ./.github/workflows/test.yml
+    name: Tests 🧪
     needs: build
     secrets: inherit
 
-  # release:
-  #   uses: ./.github/workflows/release.yml
-  #   needs: tests
-  #   if: github.ref == 'refs/heads/main'
+  e2e-tests:
+    uses: ./.github/workflows/e2e.yml
+    name: Tests 🧪
+    needs: build
+    secrets: inherit
+
+  Deploy:
+    uses: ./.github/workflows/deploy.yml
+    name: Deployment 📨
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - build
+      - e2e-tests
+      - tests
+    secrets: inherit
