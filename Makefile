@@ -21,7 +21,7 @@ prepare_env:
 
 build: prepare_env install-tailwindcss
 	@mkdir -p ./static/css ./static/scripts
-	$(GOCMD) run github.com/a-h/templ/cmd/templ@v0.3.865 generate
+	$(GOCMD) run github.com/a-h/templ/cmd/templ@v0.3.898 generate
 	./tailwindcss -i ./static/css/custom.css -o ./static/css/style.css --minify
 	GIN_MODE=release $(GOCMD) build -ldflags "-s" -v -o $(BUILD_DIR)/$(BINARY_NAME) $(CMSGO_DIR)
 	GIN_MODE=release $(GOCMD) build -ldflags "-s" -v -o $(BUILD_DIR)/$(ADMIN_BINARY_NAME) $(CMSGO_ADMIN_DIR)
@@ -35,7 +35,7 @@ clean:
 
 install-tools:
 	go install github.com/pressly/goose/v3/cmd/goose@v3.18.0
-	go install github.com/a-h/templ/cmd/templ@v0.3.865
+	go install github.com/a-h/templ/cmd/templ@v0.3.898
 	go install github.com/cosmtrek/air@v1.49.0
 
 install-tailwindcss:

@@ -12,6 +12,7 @@ templ MakeContactFormWithRecaptcha(recaptcha_sitekey string) {
     
     <label for="message" class="block text-md font-medium">Message:</label>
     <textarea id="message" class="mt-1 block w-full px-3 py-2 border border-pastel-blue dark:border-pastel-blue-900 rounded-md shadow-md focus:outline-none focus:ring-pastel-blue-500 focus:border-pastel-blue-500" name="message" rows="4" cols="50" required></textarea>
+
     <div class="text-center">
         <button class="g-recaptcha text-gray-700 dark:text-gray-900 w-fit inline-flex justify-center py-2 px-4 border border-transparent shadow-md text-sm font-medium rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-200 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 fous:ring-pastel-blue-300" data-sitekey={recaptcha_sitekey} data-callback='onSubmit' data-action='submit'>
         Submit
@@ -52,6 +53,6 @@ templ makeContact(recaptcha_sitekey string) {
   }
 }
 
-templ MakeContactPage(links []common.Link, recaptcha_sitekey string) {
-  @MakeLayout("Menu and Contact Form", links, makeContact(recaptcha_sitekey))
+templ MakeContactPage(links []common.Link, dropdowns map[string][]common.Link, recaptcha_sitekey string) {
+  @MakeLayout("Menu and Contact Form", links, dropdowns, makeContact(recaptcha_sitekey), []string{})
 }

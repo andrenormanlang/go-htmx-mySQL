@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"os"
 	"path"
-	"slices"
 	"strconv"
 
 	"github.com/andrenormanlang/go-htmx-mySQL/common"
@@ -15,8 +14,7 @@ import (
 )
 
 func imagesHandler(c *gin.Context, app_settings common.AppSettings, database database.Database) ([]byte, error) {
-	// TODO: Implement rendering.
-	pageNum := 0 // Default to page 0
+	pageNum := 1 // Default to page 0
 	if pageNumQuery := c.Param("num"); pageNumQuery != "" {
 		num, err := strconv.Atoi(pageNumQuery)
 		if err == nil && num > 0 {
@@ -26,9 +24,6 @@ func imagesHandler(c *gin.Context, app_settings common.AppSettings, database dat
 		}
 	}
 
-	limit := 10 // or whatever limit you want
-	offset := max((pageNum-1)*limit, 0)
-
 	// Get all the files inside the image directory
 	files, err := os.ReadDir(app_settings.ImageDirectory)
 	if err != nil {
@@ -36,36 +31,20 @@ func imagesHandler(c *gin.Context, app_settings common.AppSettings, database dat
 		return []byte{}, err
 	}
 
-	// Filter all the non-images out of the list
-	valid_images := make([]common.Image, 0)
-	valid_extensions := []string{".jpg", ".jpeg", ".png", ".gif"}
-	for n, file := range files {
+	filepaths := common.Map(files, func(file os.DirEntry) string {
+		return file.Name()
+	})
+	filepaths = common.Filter(filepaths, func(filepath string) bool {
+		ext := path.Ext(filepath)
+		return ext == ".json"
+	})
 
-		// TODO : This is surely not the best way
-		//        to implement pagination in for loops
-		if n >= limit {
-			break
-		}
-
-		if n < offset {
-			continue
-		}
-
-		filename := file.Name()
-		ext := path.Ext(file.Name())
-		if slices.Contains(valid_extensions, ext) {
-
-			image := common.Image{
-				Uuid:    filename[:len(filename)-len(ext)],
-				Name:    filename,
-				AltText: "undefined", // TODO : perhaps remove this
-				Ext:     ext,
-			}
-			valid_images = append(valid_images, image)
-		}
+	valid_images, err := common.GetImages(filepaths, 10, pageNum, app_settings)
+	if err != nil {
+		return []byte{}, err
 	}
 
-	index_view := views.MakeImagesPage(valid_images, app_settings.AppNavbar.Links)
+	index_view := views.MakeImagesPage(valid_images, app_settings.AppNavbar.Links, app_settings.AppNavbar.Dropdowns)
 	html_buffer := bytes.NewBuffer(nil)
 
 	err = index_view.Render(c, html_buffer)
@@ -89,10 +68,10 @@ func imageHandler(c *gin.Context, app_settings common.AppSettings, database data
 	name := filename[:len(filename)-len(ext)]
 
 	image := common.Image{
-		Uuid:    name,
-		Name:    filename,
-		AltText: "undefined",
-		Ext:     ext,
+		Uuid: name,
+		Name: filename,
+		Ext:  ext,
 	}
-	return renderHtml(c, views.MakeImagePage(image, app_settings.AppNavbar.Links))
+
+	return renderHtml(c, views.MakeImagePage(image, app_settings.AppNavbar.Links, app_settings.AppNavbar.Dropdowns))
 }

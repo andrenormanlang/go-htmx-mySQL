@@ -2,6 +2,6 @@ package views
 import (
   . "github.com/andrenormanlang/go-htmx-mySQL/common"
 )
-templ MakeServicesPage(links []Link) {
-  @MakeLayout("Services", links, makeUnderConstruction())
+templ MakeServicesPage(links []Link, dropdowns map[string][]Link) {
+  @MakeLayout("Services", links, dropdowns, makeUnderConstruction(), []string{})
 }
