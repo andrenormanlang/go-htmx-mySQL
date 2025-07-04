@@ -20,7 +20,7 @@ RUN make install-tools && \
   make build && \
   mkdir /app && \
   mv /src/tmp/* /app && \
-  mv /src/urchin_config.toml /app/ && \
+  mv /src/cmsgo_config.toml /app/ && \
   mv /src/images /app/ && \
   mv /src/static /app/ && \
   mv /src/migrations /app/migrations
