@@ -8,6 +8,7 @@ import (
 templ makeImage(image Image) {
   <h3>{ image.Name }</h3>
   <img src={fmt.Sprintf("/images/data/%s", image.Name)} />
+  
 }
 
 templ MakeImagePage(image Image, links []Link, dropdowns map[string][]Link) {

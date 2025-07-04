@@ -94,19 +94,19 @@ templ makeImages(images []Image) {
     </script>
 
     for i, image := range images {
-        <div class="block border border-pastel-blue dark:border-pastel-blue-900 rounded overflow-hidden p-2">
-          <img src={ fmt.Sprintf("images/data/%s", image.Filename) } class="w-full object-cover"
-              srcset={ fmt.Sprintf("/images/data/%s 200w, /images/data/%s 400w, /images/data/%s 600w, /images/data/%s 1200w", image.FilenameSmall, image.FilenameMedium, image.FilenameLarge, image.Filename) }
-              sizes="(max-width: 640px) 50vw,
+      <div class="block border border-pastel-blue dark:border-pastel-blue-900 rounded overflow-hidden p-2">
+        <img src={ fmt.Sprintf("images/data/%s", image.Filename) } class="w-full object-cover"
+            srcset={ fmt.Sprintf("/images/data/%s 200w, /images/data/%s 400w, /images/data/%s 600w, /images/data/%s 1200w", image.FilenameSmall, image.FilenameMedium, image.FilenameLarge, image.Filename) }
+            sizes="(max-width: 640px) 50vw,
                      16vw"
-              onclick={ templ.JSFuncCall("showImageModal", i) }
-              alt="Description">
-          <div class="p-2">
-            <h2 class="text-sm font-semibold truncate">{image.Name}</h2>
-          </div>
+            onclick={ templ.JSFuncCall("showImageModal", i) }
+            alt="Description"/>
+        <div class="p-2">
+          <h2 class="text-sm font-semibold truncate">{image.Name}</h2>
         </div>
-      <!-- </a> -->
+      </div>
     }
+    <!-- </a> -->
   </div>
 }
 
