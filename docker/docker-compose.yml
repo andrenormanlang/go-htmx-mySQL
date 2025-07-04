@@ -42,6 +42,8 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+      golang_admin_app:
+        condition: service_healthy
     restart: always
     networks:
       - common-net
