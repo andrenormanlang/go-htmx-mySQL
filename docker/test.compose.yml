@@ -9,7 +9,7 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
-      cmsgo_admin_app:
+      golang_admin_app:
         condition: service_healthy
-      cmsgo_urchin_app:
+      golang_app:
         condition: service_healthy
