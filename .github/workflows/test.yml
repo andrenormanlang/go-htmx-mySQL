@@ -2,9 +2,6 @@ name: Tests
 
 on:
   workflow_call:
-    secrets:
-      CODECOV_TOKEN:
-        required: true
 
 jobs:
   linters:
@@ -48,5 +45,3 @@ jobs:
       with:
         name: coverage-results
         path: coverage-results
-
-        
