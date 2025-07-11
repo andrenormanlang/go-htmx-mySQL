@@ -11,6 +11,8 @@ type DatabaseMock struct {
 	DeletePostHandler     func(int) (int, error)
 	AddPageHandler        func(string, string, string) (int, error)
 	GetPageHandler        func(string) (common.Page, error)
+	AddPermalinkHandler   func(common.Permalink) (int, error)
+	GetPermalinksHandler  func() ([]common.Permalink, error)
 	AddCardHandler        func(string, string, string) (string, error)
 	GetCardsHandler       func(schema_uuid string, limit int, page int) ([]common.Card, error)
 	AddChardSchemaHandler func(string, string) (string, error)
@@ -43,6 +45,14 @@ func (db DatabaseMock) AddPage(title string, content string, link string) (int, 
 
 func (db DatabaseMock) GetPage(link string) (common.Page, error) {
 	return db.GetPageHandler(link)
+}
+
+func (db DatabaseMock) AddPermalink(permalink common.Permalink) (int, error) {
+	return db.AddPermalinkHandler(permalink)
+}
+
+func (db DatabaseMock) GetPermalinks() ([]common.Permalink, error) {
+	return []common.Permalink{}, nil
 }
 
 func (db DatabaseMock) AddCard(image string, schema string, content string) (string, error) {
