@@ -23,6 +23,10 @@ func SetupRoutes(app_settings common.AppSettings, database database.Database) *g
 
 	r.POST("/pages", postPageHandler(database))
 
+	// ASSUME: permalink will not contain /
+	// POST gocms.com/permalinks/my/permalink
+	r.POST("/permalinks/:permalink/:post_id", postPermalinkHandler(database))
+
 	// For container health purposes
 	r.Any("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, PostIdResponse{Id: 0})
