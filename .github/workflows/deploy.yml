@@ -39,17 +39,17 @@ jobs:
 
     - name: Change Config
       run: |
-        sed -i 's/database_address = "localhost"/database_address = "mariadb"/' urchin_config.toml
-        sed -i 's/database_user = "root"/database_user = "urchin"/' urchin_config.toml
-        sed -i 's/database_name = "gocms"/database_name = "urchin"/' urchin_config.toml
-        sed -i 's/database_password = "root"/database_password = "urchinpw"/' urchin_config.toml
+        sed -i 's/database_address = "localhost"/database_address = "mariadb"/' cmsgo_config.toml
+        sed -i 's/database_user = "root"/database_user = "root"/' cmsgo_config.toml
+        sed -i 's/database_name = "cms-and-go"/database_name = "cmsgo"/' cmsgo_config.toml
+        sed -i 's/database_password = "root"/database_password = "cmsgopw"/' cmsgo_config.toml
     
     - name: Build Image From Current Commit
       run: |
         gcloud auth configure-docker ${{secrets.GCP_DOCKER_BASE }}
         echo "Building image with tag ${SHORT_SHA}"
-        docker build -t ${{ secrets.GCP_DOCKER_BASE }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_DOCKER_REPOSITORY }}/urchin-app:${SHORT_SHA} -f docker/app-image/Dockerfile .
-        docker push ${{ secrets.GCP_DOCKER_BASE }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_DOCKER_REPOSITORY }}/urchin-app:${SHORT_SHA}
+        docker build -t ${{ secrets.GCP_DOCKER_BASE }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_DOCKER_REPOSITORY }}/cmsgo-app:${SHORT_SHA} -f docker/app-image/Dockerfile .
+        docker push ${{ secrets.GCP_DOCKER_BASE }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_DOCKER_REPOSITORY }}/cmsgo-app:${SHORT_SHA}
 
     - name: Copy Source to GCP
       run: |

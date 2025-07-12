@@ -25,13 +25,13 @@ jobs:
           path: ./coverage
           allow_forks: true
 
-      - name: Download coverage (Push to main)
+      - name: Download coverage (Push to master)
         if: github.event.workflow_run.event == 'push'
         uses: dawidd6/action-download-artifact@v11
         with:
           name: coverage-results
           workflow: pipeline.yml
-          branch: main
+          branch: master
           path: ./coverage
           allow_forks: true
 
@@ -43,7 +43,7 @@ jobs:
           override_pr: ${{ github.event.workflow_run.pull_requests[0].number }}
           override_commit: ${{ github.event.workflow_run.pull_requests[0].head.sha }}
 
-      - name: Upload coverage (Push to main)
+      - name: Upload coverage (Push to master)
         if: github.event.workflow_run.event == 'push'
         uses: codecov/codecov-action@v3
         with:
