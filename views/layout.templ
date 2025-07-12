@@ -24,7 +24,7 @@ templ MakeLayout(title string, links []Link, dropdowns map[string][]Link, conten
     <link rel="stylesheet" href="/static/css/style.css" />
   </head>
 
-  <body class="relative bg-urchin-bg text-urchin-text transition-colors duration-300">
+  <body class="relative bg-urchin-bg text-urchin-text transition-colors duration-300 flex flex-col min-h-screen">
     @MakeNavBar(links, dropdowns)
 
     <main class="container mx-auto py-24 flex-grow sm:py-32">
